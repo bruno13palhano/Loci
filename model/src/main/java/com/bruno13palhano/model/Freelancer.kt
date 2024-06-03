@@ -10,6 +10,8 @@ data class Freelancer(
     override val city: String,
     val profession: List<String>,
     val experience: String,
+    val services: List<Service>,
+    val contracts: List<Contract>
 ) : User(
     uid = uid,
     name = name,
