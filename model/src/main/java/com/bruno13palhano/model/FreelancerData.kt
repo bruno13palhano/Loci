@@ -11,7 +11,7 @@ data class FreelancerData(
     val profession: List<String>,
     val experience: String,
     val service: List<ServiceData>,
-    val contract: List<ContractData>
+    val contracts: List<ContractData>
 ) : UserData(
         uid = uid,
         name = name,
