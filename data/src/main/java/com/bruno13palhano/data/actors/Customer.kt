@@ -1,6 +1,6 @@
-package com.bruno13palhano.model
+package com.bruno13palhano.data.model
 
-data class Customer(
+internal data class Customer(
     override val uid: String,
     override val name: String,
     override val email: String,
@@ -8,7 +8,7 @@ data class Customer(
     override val phone: String,
     override val address: String,
     override val city: String,
-    val contracts: List<Contract>
+    val internalContracts: List<InternalContract>
 ): User(
     uid = uid,
     name = name,

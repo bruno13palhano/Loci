@@ -1,6 +1,6 @@
-package com.bruno13palhano.model
+package com.bruno13palhano.data.model
 
-open class User(
+internal open class User(
     open val uid: String,
     open val name: String,
     open val email: String,
