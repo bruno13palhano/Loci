@@ -1,8 +1,10 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("kotlin-kapt")
+    alias(libs.plugins.ksp)
     alias(libs.plugins.dagger.hilt)
+    alias(libs.plugins.sqldelight)
+    alias(libs.plugins.ktlint)
 }
 
 android {
@@ -43,7 +45,18 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    kapt(libs.hilt.android.compiler)
-    kapt(libs.androidx.hilt.compiler)
+    ksp(libs.hilt.android.compiler)
+    ksp(libs.androidx.hilt.compiler)
     implementation(libs.hilt.android)
+    implementation(libs.hilt.android)
+    implementation(libs.android.driver)
+    implementation(libs.coroutines.extensions)
+}
+
+sqldelight {
+    databases {
+        create("AppDatabase") {
+            packageName.set("com.bruno13palhano.cache")
+        }
+    }
 }
