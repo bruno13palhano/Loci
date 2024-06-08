@@ -23,3 +23,4 @@ rootProject.name = "Loci"
 include(":app")
 include(":data")
 include(":model")
+include(":network")
