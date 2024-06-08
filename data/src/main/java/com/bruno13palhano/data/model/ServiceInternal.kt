@@ -2,7 +2,7 @@ package com.bruno13palhano.data.model
 
 import com.bruno13palhano.model.ServiceData
 
-internal data class InternalService(
+internal data class ServiceInternal(
     val id: Long,
     val name: String,
     val description: String,
@@ -10,7 +10,7 @@ internal data class InternalService(
     val images: List<String>
 )
 
-internal fun InternalService.asExternal() =
+internal fun ServiceInternal.asExternal() =
     ServiceData(
         id = id,
         name = name,
@@ -20,7 +20,7 @@ internal fun InternalService.asExternal() =
     )
 
 internal fun ServiceData.asInternal() =
-    InternalService(
+    ServiceInternal(
         id = id,
         name = name,
         description = description,

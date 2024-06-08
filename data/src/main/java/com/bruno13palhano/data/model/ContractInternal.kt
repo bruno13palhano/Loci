@@ -2,7 +2,7 @@ package com.bruno13palhano.data.model
 
 import com.bruno13palhano.model.ContractData
 
-internal data class InternalContract(
+internal data class ContractInternal(
     val id: Long,
     val serviceId: Long,
     val serviceName: String,
@@ -13,7 +13,7 @@ internal data class InternalContract(
     val status: String
 )
 
-internal fun InternalContract.asExternal() =
+internal fun ContractInternal.asExternal() =
     ContractData(
         id = id,
         serviceId = serviceId,
@@ -26,7 +26,7 @@ internal fun InternalContract.asExternal() =
     )
 
 internal fun ContractData.asInternal() =
-    InternalContract(
+    ContractInternal(
         id = id,
         serviceId = serviceId,
         serviceName = serviceName,

@@ -1,6 +1,6 @@
 package com.bruno13palhano.data.freelancer
 
-import com.bruno13palhano.data.actors.Service
+import com.bruno13palhano.model.ServiceData
 import kotlinx.coroutines.flow.Flow
 
 internal interface Freelancer {
@@ -17,13 +17,13 @@ internal interface Freelancer {
     )
 
     suspend fun createService(
-        service: Service,
+        service: ServiceData,
         onError: (error: Int) -> Unit,
         onSuccess: (id: Long) -> Unit
     )
 
     suspend fun updateService(
-        service: Service,
+        service: ServiceData,
         onError: (error: Int) -> Unit,
         onSuccess: () -> Unit
     )
@@ -43,9 +43,9 @@ internal interface Freelancer {
     fun getServiceById(
         serviceId: Long,
         onError: (error: Int) -> Unit
-    ): Flow<Service>
+    ): Flow<ServiceData>
 
-    fun getServices(onError: (error: Int) -> Unit): Flow<List<Service>>
+    fun getServices(onError: (error: Int) -> Unit): Flow<List<ServiceData>>
 
     fun cancelContract(
         contractId: Long,
