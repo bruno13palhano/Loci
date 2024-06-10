@@ -8,6 +8,7 @@ data class CustomerData(
     override val phone: String,
     override val address: String,
     override val city: String,
+    val jobs: List<JobData>,
     val contracts: List<ContractData>
 ) : UserData(
         uid = uid,
