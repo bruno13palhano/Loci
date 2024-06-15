@@ -4,7 +4,7 @@ import com.bruno13palhano.model.JobData
 
 data class JobInternal(
     val id: Long,
-    val name: String,
+    val title: String,
     val description: String,
     val price: Float,
     val startDate: Long,
@@ -14,7 +14,7 @@ data class JobInternal(
 internal fun JobInternal.asExternal() =
     JobData(
         id = id,
-        name = name,
+        title = title,
         description = description,
         price = price,
         startDate = startDate,
@@ -24,7 +24,7 @@ internal fun JobInternal.asExternal() =
 internal fun JobData.asInternal() =
     JobInternal(
         id = id,
-        name = name,
+        title = title,
         description = description,
         price = price,
         startDate = startDate,
