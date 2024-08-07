@@ -56,6 +56,7 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.android.driver)
     implementation(libs.coroutines.extensions)
+    implementation(libs.paging.runtime)
 }
 
 sqldelight {
