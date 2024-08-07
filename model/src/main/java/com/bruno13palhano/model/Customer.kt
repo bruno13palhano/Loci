@@ -1,6 +1,6 @@
 package com.bruno13palhano.model
 
-data class FreelancerData(
+data class Customer(
     override val uid: String,
     override val name: String,
     override val email: String,
@@ -8,11 +8,9 @@ data class FreelancerData(
     override val phone: String,
     override val address: String,
     override val city: String,
-    val profession: List<String>,
-    val experience: String,
-    val service: List<ServiceData>,
-    val contracts: List<ContractData>
-) : UserData(
+    val jobs: List<Job>,
+    val contracts: List<Contract>
+) : User(
         uid = uid,
         name = name,
         email = email,

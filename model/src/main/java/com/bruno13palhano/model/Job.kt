@@ -1,9 +1,10 @@
 package com.bruno13palhano.model
 
-data class ServiceData(
+data class Job(
     val id: Long,
     val title: String,
     val description: String,
     val price: Float,
-    val images: List<String>
+    val startDate: Long,
+    val endDate: Long
 )

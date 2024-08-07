@@ -1,6 +1,6 @@
 package com.bruno13palhano.network.api.model
 
-import com.bruno13palhano.model.CustomerData
+import com.bruno13palhano.model.Customer
 import com.squareup.moshi.Json
 
 internal data class CustomerInternal(
@@ -16,7 +16,7 @@ internal data class CustomerInternal(
 )
 
 internal fun CustomerInternal.asCustomer() =
-    CustomerData(
+    Customer(
         uid = uid,
         name = name,
         email = email,
@@ -28,7 +28,7 @@ internal fun CustomerInternal.asCustomer() =
         contracts = contracts.map { it.asExternal() }
     )
 
-internal fun CustomerData.asInternal() =
+internal fun Customer.asInternal() =
     CustomerInternal(
         uid = uid,
         name = name,

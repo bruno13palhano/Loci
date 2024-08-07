@@ -1,30 +1,33 @@
 package com.bruno13palhano.network.api.model
 
-import com.bruno13palhano.model.ServiceData
+import com.bruno13palhano.model.Job
 import com.squareup.moshi.Json
 
-internal data class ServiceInternal(
+internal data class JobInternal(
     @Json(name = "id") val id: Long,
     @Json(name = "title") val title: String,
     @Json(name = "description") val description: String,
     @Json(name = "price") val price: Float,
-    @Json(name = "images") val images: List<String>
+    @Json(name = "startDate") val startDate: Long,
+    @Json(name = "endDate") val endDate: Long
 )
 
-internal fun ServiceInternal.asExternal() =
-    ServiceData(
+internal fun JobInternal.asExternal() =
+    Job(
         id = id,
         title = title,
         description = description,
         price = price,
-        images = images
+        startDate = startDate,
+        endDate = endDate
     )
 
-internal fun ServiceData.asInternal() =
-    ServiceInternal(
+internal fun Job.asInternal() =
+    JobInternal(
         id = id,
         title = title,
         description = description,
         price = price,
-        images = images
+        startDate = startDate,
+        endDate = endDate
     )

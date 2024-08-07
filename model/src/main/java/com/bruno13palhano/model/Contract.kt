@@ -1,9 +1,9 @@
 package com.bruno13palhano.model
 
-data class ContractData(
+data class Contract(
     val id: Long,
     val serviceId: Long,
-    val serviceName: String,
+    val serviceTitle: String,
     val serviceDescription: String,
     val customerName: String,
     val freelancerName: String,

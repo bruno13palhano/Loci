@@ -1,6 +1,6 @@
 package com.bruno13palhano.network.api.model
 
-import com.bruno13palhano.model.FreelancerData
+import com.bruno13palhano.model.Freelancer
 import com.squareup.moshi.Json
 
 internal data class FreelancerInternal(
@@ -18,7 +18,7 @@ internal data class FreelancerInternal(
 )
 
 internal fun FreelancerInternal.asExternal() =
-    FreelancerData(
+    Freelancer(
         uid = uid,
         name = name,
         email = email,
@@ -32,7 +32,7 @@ internal fun FreelancerInternal.asExternal() =
         contracts = contracts.map { it.asExternal() }
     )
 
-internal fun FreelancerData.asInternal() =
+internal fun Freelancer.asInternal() =
     FreelancerInternal(
         uid = uid,
         name = name,

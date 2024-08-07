@@ -1,12 +1,12 @@
 package com.bruno13palhano.network.api.model
 
-import com.bruno13palhano.model.ContractData
+import com.bruno13palhano.model.Contract
 import com.squareup.moshi.Json
 
 internal data class ContractInternal(
     @Json(name = "id") val id: Long,
     @Json(name = "serviceId") val serviceId: Long,
-    @Json(name = "serviceName") val serviceName: String,
+    @Json(name = "serviceTitle") val serviceTitle: String,
     @Json(name = "serviceDescription") val serviceDescription: String,
     @Json(name = "customerName") val customerName: String,
     @Json(name = "freelancerName") val freelancerName: String,
@@ -15,10 +15,10 @@ internal data class ContractInternal(
 )
 
 internal fun ContractInternal.asExternal() =
-    ContractData(
+    Contract(
         id = id,
         serviceId = serviceId,
-        serviceName = serviceName,
+        serviceTitle = serviceTitle,
         serviceDescription = serviceDescription,
         customerName = customerName,
         freelancerName = freelancerName,
@@ -26,11 +26,11 @@ internal fun ContractInternal.asExternal() =
         status = status
     )
 
-internal fun ContractData.asInternal() =
+internal fun Contract.asInternal() =
     ContractInternal(
         id = id,
         serviceId = serviceId,
-        serviceName = serviceName,
+        serviceTitle = serviceTitle,
         serviceDescription = serviceDescription,
         customerName = customerName,
         freelancerName = freelancerName,
