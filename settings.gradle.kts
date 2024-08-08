@@ -21,6 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "Loci"
 include(":app")
-include(":data")
-include(":model")
-include(":network")
+include(":core:data")
+include(":core:model")
+include(":core:network")

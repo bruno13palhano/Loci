@@ -12,9 +12,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.bruno13palhano.loci.ui.theme.LociTheme
+import com.bruno13palhano.model.Contract
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        val contract = Contract(
+            id = 1L,
+            serviceId = 1L,
+            serviceTitle = "Service title",
+            serviceDescription = "Service description",
+            customerName = "Customer name",
+            freelancerName = "Freelancer name",
+            price = 100f,
+            status = "Status"
+        )
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
