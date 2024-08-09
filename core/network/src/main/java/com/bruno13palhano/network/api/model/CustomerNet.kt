@@ -3,7 +3,7 @@ package com.bruno13palhano.network.api.model
 import com.bruno13palhano.model.Customer
 import com.squareup.moshi.Json
 
-internal data class CustomerInternal(
+internal data class CustomerNet(
     @Json(name = "uid") val uid: String,
     @Json(name = "name") val name: String,
     @Json(name = "email") val email: String,
@@ -11,11 +11,11 @@ internal data class CustomerInternal(
     @Json(name = "phone") val phone: String,
     @Json(name = "address") val address: String,
     @Json(name = "city") val city: String,
-    @Json(name = "jobs") val jobs: List<JobInternal>,
-    @Json(name = "contracts") val contracts: List<ContractInternal>
+    @Json(name = "jobs") val jobs: List<JobNet>,
+    @Json(name = "contracts") val contracts: List<ContractNet>
 )
 
-internal fun CustomerInternal.asCustomer() =
+internal fun CustomerNet.asCustomer() =
     Customer(
         uid = uid,
         name = name,
@@ -29,7 +29,7 @@ internal fun CustomerInternal.asCustomer() =
     )
 
 internal fun Customer.asInternal() =
-    CustomerInternal(
+    CustomerNet(
         uid = uid,
         name = name,
         email = email,

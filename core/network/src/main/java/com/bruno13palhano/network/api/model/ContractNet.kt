@@ -3,7 +3,7 @@ package com.bruno13palhano.network.api.model
 import com.bruno13palhano.model.Contract
 import com.squareup.moshi.Json
 
-internal data class ContractInternal(
+internal data class ContractNet(
     @Json(name = "id") val id: Long,
     @Json(name = "serviceId") val serviceId: Long,
     @Json(name = "serviceTitle") val serviceTitle: String,
@@ -14,7 +14,7 @@ internal data class ContractInternal(
     @Json(name = "status") val status: String
 )
 
-internal fun ContractInternal.asExternal() =
+internal fun ContractNet.asExternal() =
     Contract(
         id = id,
         serviceId = serviceId,
@@ -27,7 +27,7 @@ internal fun ContractInternal.asExternal() =
     )
 
 internal fun Contract.asInternal() =
-    ContractInternal(
+    ContractNet(
         id = id,
         serviceId = serviceId,
         serviceTitle = serviceTitle,

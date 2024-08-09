@@ -3,7 +3,7 @@ package com.bruno13palhano.network.api.model
 import com.bruno13palhano.model.Freelancer
 import com.squareup.moshi.Json
 
-internal data class FreelancerInternal(
+internal data class FreelancerNet(
     @Json(name = "uid") val uid: String,
     @Json(name = "name") val name: String,
     @Json(name = "email") val email: String,
@@ -13,11 +13,11 @@ internal data class FreelancerInternal(
     @Json(name = "city") val city: String,
     @Json(name = "profession") val profession: List<String>,
     @Json(name = "experience") val experience: String,
-    @Json(name = "service") val service: List<ServiceInternal>,
-    @Json(name = "contracts") val contracts: List<ContractInternal>
+    @Json(name = "service") val service: List<ServiceNet>,
+    @Json(name = "contracts") val contracts: List<ContractNet>
 )
 
-internal fun FreelancerInternal.asExternal() =
+internal fun FreelancerNet.asExternal() =
     Freelancer(
         uid = uid,
         name = name,
@@ -33,7 +33,7 @@ internal fun FreelancerInternal.asExternal() =
     )
 
 internal fun Freelancer.asInternal() =
-    FreelancerInternal(
+    FreelancerNet(
         uid = uid,
         name = name,
         email = email,

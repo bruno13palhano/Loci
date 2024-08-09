@@ -3,7 +3,7 @@ package com.bruno13palhano.network.api.model
 import com.bruno13palhano.model.Job
 import com.squareup.moshi.Json
 
-internal data class JobInternal(
+internal data class JobNet(
     @Json(name = "id") val id: Long,
     @Json(name = "title") val title: String,
     @Json(name = "description") val description: String,
@@ -12,7 +12,7 @@ internal data class JobInternal(
     @Json(name = "endDate") val endDate: Long
 )
 
-internal fun JobInternal.asExternal() =
+internal fun JobNet.asExternal() =
     Job(
         id = id,
         title = title,
@@ -23,7 +23,7 @@ internal fun JobInternal.asExternal() =
     )
 
 internal fun Job.asInternal() =
-    JobInternal(
+    JobNet(
         id = id,
         title = title,
         description = description,
