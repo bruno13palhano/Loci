@@ -32,6 +32,11 @@ turbineVerson = "1.1.0"
 mockitoCoreVersion = "5.12.0"
 mockitoKotlinVersion = "5.4.0"
 mockWebServerVersion = "4.12.0"
+firebaseBom = "33.4.0"
+firebaseCrashlytics = "19.2.0"
+firebaseAnalytics = "22.1.2"
+googleServicesVersion = "4.4.2"
+crashlyticsVersion = "3.0.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -63,6 +68,9 @@ androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-com
 androidx-hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "hiltWork" }
 android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqlDelight" }
 coroutines-extensions = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqlDelight" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics", version.ref = "firebaseCrashlytics" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics", version.ref = "firebaseAnalytics" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navVersion" }
 androidx-navigation-testing = { module = "androidx.navigation:navigation-testing", version.ref = "navVersion" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serializationVersion" }
@@ -91,3 +99,5 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
 jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintVersion" }
+crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlyticsVersion" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServicesVersion" }

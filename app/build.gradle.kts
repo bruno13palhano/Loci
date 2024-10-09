@@ -8,6 +8,8 @@ plugins {
     alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.jetbrains.kotlin.serialization)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.crashlytics)
 }
 
 val keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -103,4 +105,7 @@ dependencies {
     implementation(libs.coil)
     implementation(libs.paging.compose)
     implementation(libs.androidx.material.icons.extended)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.analytics)
 }
