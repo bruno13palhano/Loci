@@ -37,6 +37,7 @@ firebaseCrashlytics = "19.2.0"
 firebaseAnalytics = "22.1.2"
 googleServicesVersion = "4.4.2"
 crashlyticsVersion = "3.0.2"
+moleculeVersion = "2.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -86,6 +87,7 @@ turbine = { module = "app.cash.turbine:turbine", version.ref = "turbineVerson" }
 mockitoCore = { module = "org.mockito:mockito-core", version.ref = "mockitoCoreVersion" }
 mockitoKotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlinVersion" }
 mockWebServer = { module = "com.squareup.okhttp3:mockwebserver", version.ref = "mockWebServerVersion" }
+molecule = { module = "app.cash.molecule:molecule-runtime", version.ref = "moleculeVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
