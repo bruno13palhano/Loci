@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -8,6 +10,11 @@ plugins {
     alias(libs.plugins.ktlint)
 }
 
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystoreProperties = Properties()
+
+keystoreProperties.load(keystorePropertiesFile.inputStream())
+
 android {
     namespace = "com.bruno13palhano.loci"
     compileSdk = 34
@@ -15,7 +22,7 @@ android {
     defaultConfig {
         applicationId = "com.bruno13palhano.loci"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -25,33 +32,24 @@ android {
         }
     }
 
+    signingConfigs {
+        create("config") {
+            keyAlias = keystoreProperties.getProperty("RELEASE_KEY_ALIAS")
+            keyPassword = keystoreProperties.getProperty("RELEASE_KEY_PASSWORD")
+            storeFile = rootProject.file(keystoreProperties.getProperty("RELEASE_STORE_FILE"))
+            storePassword = keystoreProperties.getProperty("RELEASE_STORE_PASSWORD")
+        }
+    }
+
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-        }
-
-        debug {
-            isMinifyEnabled = false
-            isShrinkResources = false
-            isDebuggable = true
-        }
-    }
-
-    flavorDimensions += "version"
-    productFlavors {
-        create("demo") {
-            dimension = "version"
-            applicationIdSuffix = ".demo"
-            versionNameSuffix = "-demo"
-        }
-        create("full") {
-            dimension = "version"
-            applicationIdSuffix = ".full"
-            versionNameSuffix = "-full"
+            signingConfig = signingConfigs.getByName("config")
         }
     }
 

@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.bruno13palhano.network"
-    compileSdk = 34
+    compileSdk = 35
 
     buildFeatures {
         buildConfig = true
