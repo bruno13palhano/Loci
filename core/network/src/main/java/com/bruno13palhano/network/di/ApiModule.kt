@@ -1,7 +1,8 @@
 package com.bruno13palhano.network.di
 
 import com.bruno13palhano.network.BuildConfig
-import com.bruno13palhano.network.api.Api
+import com.bruno13palhano.network.api.AuthenticationApi
+import com.bruno13palhano.network.api.WorkspaceApi
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -20,8 +21,7 @@ private const val BASE_URL = BuildConfig.apiUrl
 @InstallIn(SingletonComponent::class)
 internal object ApiModule {
     @Provides
-    @Singleton
-    fun provideApi(): Api {
+    fun provideRetrofit(): Retrofit {
         val moshi =
             Moshi.Builder()
                 .add(KotlinJsonAdapterFactory())
@@ -35,15 +35,26 @@ internal object ApiModule {
                 .addInterceptor(interceptor)
                 .build()
 
-        val retrofit =
-            Retrofit.Builder()
+        return Retrofit.Builder()
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
                 .baseUrl(BASE_URL)
                 .client(client)
                 .build()
+    }
 
-        val api: Api by lazy { retrofit.create(Api::class.java) }
+    @Provides
+    @Singleton
+    fun provideAuthenticationApi(retrofit: Retrofit): AuthenticationApi {
+        val authenticationApi: AuthenticationApi by lazy { retrofit.create(AuthenticationApi::class.java) }
 
-        return api
+        return authenticationApi
+    }
+
+    @Provides
+    @Singleton
+    fun provideWorkspaceApi(retrofit: Retrofit): WorkspaceApi {
+        val workspaceApi: WorkspaceApi by lazy { retrofit.create(WorkspaceApi::class.java) }
+
+        return workspaceApi
     }
 }
