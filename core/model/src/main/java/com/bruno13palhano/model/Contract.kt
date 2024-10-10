@@ -8,5 +8,6 @@ data class Contract(
     val customerName: String,
     val freelancerName: String,
     val price: Float,
-    val status: String
+    val status: String,
+    val timestamp: Long
 )

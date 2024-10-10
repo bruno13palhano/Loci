@@ -6,5 +6,6 @@ data class Job(
     val description: String,
     val price: Float,
     val startDate: Long,
-    val endDate: Long
+    val endDate: Long,
+    val timestamp: Long
 )

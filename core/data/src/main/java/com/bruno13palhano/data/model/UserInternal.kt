@@ -9,10 +9,11 @@ internal open class UserInternal(
     open val password: String,
     open val phone: String,
     open val address: String,
-    open val city: String
+    open val city: String,
+    open val timestamp: Long
 )
 
-internal fun UserInternal.asUser() =
+internal fun UserInternal.asExternal() =
     User(
         uid = uid,
         name = name,
@@ -20,7 +21,8 @@ internal fun UserInternal.asUser() =
         password = password,
         phone = phone,
         address = address,
-        city = city
+        city = city,
+        timestamp = timestamp
     )
 
 internal fun User.asInternal() =
@@ -31,5 +33,6 @@ internal fun User.asInternal() =
         password = password,
         phone = phone,
         address = address,
-        city = city
+        city = city,
+        timestamp = timestamp
     )

@@ -10,7 +10,8 @@ internal data class ContractInternal(
     val customerName: String,
     val freelancerName: String,
     val price: Float,
-    val status: String
+    val status: String,
+    val timestamp: Long
 )
 
 internal fun ContractInternal.asExternal() =
@@ -22,7 +23,8 @@ internal fun ContractInternal.asExternal() =
         customerName = customerName,
         freelancerName = freelancerName,
         price = price,
-        status = status
+        status = status,
+        timestamp = timestamp
     )
 
 internal fun Contract.asInternal() =
@@ -34,5 +36,6 @@ internal fun Contract.asInternal() =
         customerName = customerName,
         freelancerName = freelancerName,
         price = price,
-        status = status
+        status = status,
+        timestamp = timestamp
     )

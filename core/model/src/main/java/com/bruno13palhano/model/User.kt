@@ -7,5 +7,6 @@ open class User(
     open val password: String,
     open val phone: String,
     open val address: String,
-    open val city: String
+    open val city: String,
+    open val timestamp: Long
 )

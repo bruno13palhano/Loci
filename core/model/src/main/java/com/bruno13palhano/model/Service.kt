@@ -5,5 +5,6 @@ data class Service(
     val title: String,
     val description: String,
     val price: Float,
-    val images: List<String>
+    val images: List<String>,
+    val timestamp: Long
 )

@@ -7,7 +7,8 @@ internal data class ServiceInternal(
     val title: String,
     val description: String,
     val price: Float,
-    val images: List<String>
+    val images: List<String>,
+    val timestamp: Long
 )
 
 internal fun ServiceInternal.asExternal() =
@@ -16,7 +17,8 @@ internal fun ServiceInternal.asExternal() =
         title = title,
         description = description,
         price = price,
-        images = images
+        images = images,
+        timestamp = timestamp
     )
 
 internal fun Service.asInternal() =
@@ -25,5 +27,6 @@ internal fun Service.asInternal() =
         title = title,
         description = description,
         price = price,
-        images = images
+        images = images,
+        timestamp = timestamp
     )

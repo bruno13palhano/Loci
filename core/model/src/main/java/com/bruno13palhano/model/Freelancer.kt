@@ -8,6 +8,7 @@ data class Freelancer(
     override val phone: String,
     override val address: String,
     override val city: String,
+    override val timestamp: Long,
     val profession: List<String>,
     val experience: String,
     val service: List<Service>,
@@ -19,5 +20,6 @@ data class Freelancer(
         password = password,
         phone = phone,
         address = address,
-        city = city
+        city = city,
+        timestamp = timestamp
     )

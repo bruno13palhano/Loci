@@ -10,6 +10,7 @@ internal data class CustomerInternal(
     override val phone: String,
     override val address: String,
     override val city: String,
+    override val timestamp: Long,
     val jobs: List<JobInternal>,
     val contracts: List<ContractInternal>
 ) : UserInternal(
@@ -19,7 +20,8 @@ internal data class CustomerInternal(
         password = password,
         phone = phone,
         address = address,
-        city = city
+        city = city,
+        timestamp = timestamp
     )
 
 internal fun CustomerInternal.asExternal() =
@@ -31,6 +33,7 @@ internal fun CustomerInternal.asExternal() =
         phone = phone,
         address = address,
         city = city,
+        timestamp = timestamp,
         jobs = jobs.map { it.asExternal() },
         contracts = contracts.map { it.asExternal() }
     )
@@ -44,6 +47,7 @@ internal fun Customer.asInternal() =
         phone = phone,
         address = address,
         city = city,
+        timestamp = timestamp,
         jobs = jobs.map { it.asInternal() },
         contracts = contracts.map { it.asInternal() }
     )

@@ -8,7 +8,8 @@ data class JobInternal(
     val description: String,
     val price: Float,
     val startDate: Long,
-    val endDate: Long
+    val endDate: Long,
+    val timestamp: Long
 )
 
 internal fun JobInternal.asExternal() =
@@ -18,7 +19,8 @@ internal fun JobInternal.asExternal() =
         description = description,
         price = price,
         startDate = startDate,
-        endDate = endDate
+        endDate = endDate,
+        timestamp = timestamp
     )
 
 internal fun Job.asInternal() =
@@ -28,5 +30,6 @@ internal fun Job.asInternal() =
         description = description,
         price = price,
         startDate = startDate,
-        endDate = endDate
+        endDate = endDate,
+        timestamp = timestamp
     )

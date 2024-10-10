@@ -8,6 +8,7 @@ data class Customer(
     override val phone: String,
     override val address: String,
     override val city: String,
+    override val timestamp: Long,
     val jobs: List<Job>,
     val contracts: List<Contract>
 ) : User(
@@ -17,5 +18,6 @@ data class Customer(
         password = password,
         phone = phone,
         address = address,
-        city = city
+        city = city,
+        timestamp = timestamp
     )
