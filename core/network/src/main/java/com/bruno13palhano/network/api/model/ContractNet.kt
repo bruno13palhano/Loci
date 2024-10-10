@@ -11,7 +11,8 @@ internal data class ContractNet(
     @Json(name = "customerName") val customerName: String,
     @Json(name = "freelancerName") val freelancerName: String,
     @Json(name = "price") val price: Float,
-    @Json(name = "status") val status: String
+    @Json(name = "status") val status: String,
+    @Json(name = "timestamp") val timestamp: Long
 )
 
 internal fun ContractNet.asExternal() =
@@ -23,7 +24,8 @@ internal fun ContractNet.asExternal() =
         customerName = customerName,
         freelancerName = freelancerName,
         price = price,
-        status = status
+        status = status,
+        timestamp = timestamp
     )
 
 internal fun Contract.asInternal() =
@@ -35,5 +37,6 @@ internal fun Contract.asInternal() =
         customerName = customerName,
         freelancerName = freelancerName,
         price = price,
-        status = status
+        status = status,
+        timestamp = timestamp
     )

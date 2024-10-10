@@ -10,7 +10,8 @@ data class UserNet(
     @Json(name = "password") val password: String,
     @Json(name = "phone") val phone: String,
     @Json(name = "address") val address: String,
-    @Json(name = "city") val city: String
+    @Json(name = "city") val city: String,
+    @Json(name = "timestamp") val timestamp: Long
 )
 
 internal fun UserNet.asExternal() = User(
@@ -20,7 +21,8 @@ internal fun UserNet.asExternal() = User(
     password = password,
     phone = phone,
     address = address,
-    city = city
+    city = city,
+    timestamp = timestamp
 )
 
 internal fun User.asInternal() = UserNet(
@@ -30,5 +32,6 @@ internal fun User.asInternal() = UserNet(
     password = password,
     phone = phone,
     address = address,
-    city = city
+    city = city,
+    timestamp = timestamp
 )

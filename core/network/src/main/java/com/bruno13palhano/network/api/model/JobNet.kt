@@ -9,7 +9,8 @@ internal data class JobNet(
     @Json(name = "description") val description: String,
     @Json(name = "price") val price: Float,
     @Json(name = "startDate") val startDate: Long,
-    @Json(name = "endDate") val endDate: Long
+    @Json(name = "endDate") val endDate: Long,
+    @Json(name = "timestamp") val timestamp: Long
 )
 
 internal fun JobNet.asExternal() =
@@ -19,7 +20,8 @@ internal fun JobNet.asExternal() =
         description = description,
         price = price,
         startDate = startDate,
-        endDate = endDate
+        endDate = endDate,
+        timestamp = timestamp
     )
 
 internal fun Job.asInternal() =
@@ -29,5 +31,6 @@ internal fun Job.asInternal() =
         description = description,
         price = price,
         startDate = startDate,
-        endDate = endDate
+        endDate = endDate,
+        timestamp = timestamp
     )

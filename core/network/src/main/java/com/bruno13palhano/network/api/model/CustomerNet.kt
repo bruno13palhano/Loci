@@ -11,6 +11,7 @@ internal data class CustomerNet(
     @Json(name = "phone") val phone: String,
     @Json(name = "address") val address: String,
     @Json(name = "city") val city: String,
+    @Json(name = "timestamp") val timestamp: Long,
     @Json(name = "jobs") val jobs: List<JobNet>,
     @Json(name = "contracts") val contracts: List<ContractNet>
 )
@@ -24,6 +25,7 @@ internal fun CustomerNet.asCustomer() =
         phone = phone,
         address = address,
         city = city,
+        timestamp = timestamp,
         jobs = jobs.map { it.asExternal() },
         contracts = contracts.map { it.asExternal() }
     )
@@ -37,6 +39,7 @@ internal fun Customer.asInternal() =
         phone = phone,
         address = address,
         city = city,
+        timestamp = timestamp,
         jobs = jobs.map { it.asInternal() },
         contracts = contracts.map { it.asInternal() }
     )

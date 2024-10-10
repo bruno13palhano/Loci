@@ -8,7 +8,8 @@ internal data class ServiceNet(
     @Json(name = "title") val title: String,
     @Json(name = "description") val description: String,
     @Json(name = "price") val price: Float,
-    @Json(name = "images") val images: List<String>
+    @Json(name = "images") val images: List<String>,
+    @Json(name = "timestamp") val timestamp: Long
 )
 
 internal fun ServiceNet.asExternal() =
@@ -17,7 +18,8 @@ internal fun ServiceNet.asExternal() =
         title = title,
         description = description,
         price = price,
-        images = images
+        images = images,
+        timestamp = timestamp
     )
 
 internal fun Service.asInternal() =
@@ -26,5 +28,6 @@ internal fun Service.asInternal() =
         title = title,
         description = description,
         price = price,
-        images = images
+        images = images,
+        timestamp = timestamp
     )
