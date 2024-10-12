@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 
-abstract class BaseViewModel<State: ViewState, Event: ViewEvent, Action: ViewAction, Effect: ViewEffect>(
+abstract class BaseViewModel<State: ViewState, Event: ViewEvent, Effect: ViewEffect, Action: ViewAction>(
     protected val actionProcessor: ActionProcessor<Action, Event>,
     protected val reducer: Reducer<State, Event, Effect>
 ) : ViewModel() {
