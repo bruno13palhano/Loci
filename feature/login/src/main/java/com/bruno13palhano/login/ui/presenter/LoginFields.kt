@@ -18,4 +18,6 @@ internal class LoginFields @Inject constructor() {
     fun updatePassword(password: String) {
         this.password = password
     }
+
+    fun isValid() = email.isNotBlank() && password.isNotBlank()
 }
