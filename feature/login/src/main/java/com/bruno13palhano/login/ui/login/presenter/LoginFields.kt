@@ -1,4 +1,4 @@
-package com.bruno13palhano.login.ui.presenter
+package com.bruno13palhano.login.ui.login.presenter
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

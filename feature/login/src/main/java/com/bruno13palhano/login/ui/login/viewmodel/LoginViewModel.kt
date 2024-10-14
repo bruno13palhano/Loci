@@ -1,14 +1,14 @@
-package com.bruno13palhano.login.ui.viewmodel
+package com.bruno13palhano.login.ui.login.viewmodel
 
 import androidx.compose.runtime.Composable
-import com.bruno13palhano.login.ui.presenter.LoginAction
-import com.bruno13palhano.login.ui.presenter.LoginActionProcessor
-import com.bruno13palhano.login.ui.presenter.LoginEffect
-import com.bruno13palhano.login.ui.presenter.LoginEvent
-import com.bruno13palhano.login.ui.presenter.LoginFields
-import com.bruno13palhano.login.ui.presenter.LoginReducer
-import com.bruno13palhano.login.ui.presenter.LoginState
-import com.bruno13palhano.login.ui.presenter.loginPresenter
+import com.bruno13palhano.login.ui.login.presenter.LoginAction
+import com.bruno13palhano.login.ui.login.presenter.LoginActionProcessor
+import com.bruno13palhano.login.ui.login.presenter.LoginEffect
+import com.bruno13palhano.login.ui.login.presenter.LoginEvent
+import com.bruno13palhano.login.ui.login.presenter.LoginFields
+import com.bruno13palhano.login.ui.login.presenter.LoginReducer
+import com.bruno13palhano.login.ui.login.presenter.LoginState
+import com.bruno13palhano.login.ui.login.presenter.loginPresenter
 import com.bruno13palhano.ui.shared.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
