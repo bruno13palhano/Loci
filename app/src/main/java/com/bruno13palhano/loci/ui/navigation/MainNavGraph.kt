@@ -10,9 +10,14 @@ import com.bruno13palhano.login.navigation.loginScreen
 @Composable
 fun MainNavGraph(
     modifier: Modifier = Modifier,
-    navController: NavHostController
+    navController: NavHostController,
+    showBottomMenu: (show: Boolean) -> Unit
 ) {
     NavHost(navController = navController, startDestination = LoginRoutes.MainLogin) {
-        loginScreen(modifier = modifier, navController = navController)
+        loginScreen(
+            modifier = modifier,
+            navController = navController,
+            showBottomMenu = showBottomMenu
+        )
     }
 }
