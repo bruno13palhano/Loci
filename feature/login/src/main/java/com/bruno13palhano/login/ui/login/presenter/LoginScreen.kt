@@ -1,4 +1,4 @@
-package com.bruno13palhano.login.ui.presenter
+package com.bruno13palhano.login.ui.login.presenter
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -51,7 +51,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bruno13palhano.login.R
-import com.bruno13palhano.login.ui.viewmodel.LoginViewModel
+import com.bruno13palhano.login.ui.login.viewmodel.LoginViewModel
 import com.bruno13palhano.ui.components.clickableWithoutRipple
 import com.bruno13palhano.ui.components.rememberFlowWithLifecycle
 import kotlinx.coroutines.launch
@@ -139,7 +139,8 @@ private fun LoginContent(
                 .padding(it)
                 .consumeWindowInsets(it)
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             OutlinedTextField(
                 modifier = Modifier
@@ -192,33 +193,19 @@ private fun LoginContent(
                 keyboardActions = KeyboardActions(onDone = { defaultKeyboardAction(ImeAction.Done) })
             )
 
-            Row(
+            Button(
                 modifier = Modifier
-                    .padding(8.dp)
-                    .fillMaxWidth()
-                    .weight(1f),
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.Bottom
+                    .padding(32.dp)
+                    .fillMaxWidth(),
+                onClick = { /*TODO*/ }
             ) {
-//                TextButton(
-//                    onClick = { onAction(LoginAction.OnNavigateToNewAccount) }
-//                ) {
-//                    Text(
-//                        text = stringResource(id = R.string.create_account)
-//                    )
-//                }
-                Button(
-                    modifier = Modifier.padding(end = 8.dp),
-                    onClick = { /*TODO*/ }
-                ) {
-                    Text(text = "Create Account")
-                }
+                Text(text = "Login")
+            }
 
-                Button(
-                    onClick = { /*TODO*/ }
-                ) {
-                    Text(text = "Login")
-                }
+            Button(
+                onClick = { /*TODO*/ }
+            ) {
+                Text(text = "Create Account")
             }
         }
     }
@@ -231,7 +218,7 @@ private fun LoginPreview() {
         snackbarHostState = SnackbarHostState(),
         state = LoginState(
             loading = false,
-            loginFields = LoginFields().apply { 
+            loginFields = LoginFields().apply {
                 updateEmail("")
                 updatePassword("12345678")
             },
