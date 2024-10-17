@@ -60,6 +60,7 @@ internal fun LoginRoute(
     modifier: Modifier = Modifier,
     navigateToHome: () -> Unit,
     navigateToNewAccount: () -> Unit,
+    navigateToForgotPassword: () -> Unit,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
@@ -88,6 +89,8 @@ internal fun LoginRoute(
                 is LoginEffect.NavigateToHome -> navigateToHome()
 
                 is LoginEffect.NavigateToNewAccount -> navigateToNewAccount()
+
+                is LoginEffect.NavigateToForgotPassword -> navigateToForgotPassword()
             }
         }
     }

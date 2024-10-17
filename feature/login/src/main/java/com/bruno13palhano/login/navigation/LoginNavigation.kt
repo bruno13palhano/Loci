@@ -19,7 +19,8 @@ fun NavGraphBuilder.loginScreen(
             LoginRoute(
                 modifier = modifier,
                 navigateToHome = {},
-                navigateToNewAccount = {}
+                navigateToNewAccount = {},
+                navigateToForgotPassword = {}
             )
         }
     }
@@ -34,4 +35,7 @@ sealed interface LoginRoutes {
 
     @Serializable
     data object CreateAccount : LoginRoutes
+
+    @Serializable
+    data object ForgotPassword : LoginRoutes
 }

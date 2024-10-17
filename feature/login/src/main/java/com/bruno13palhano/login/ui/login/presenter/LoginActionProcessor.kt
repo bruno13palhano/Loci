@@ -7,9 +7,11 @@ internal class LoginActionProcessor : ActionProcessor<LoginAction, LoginEvent> {
         return when (action) {
             is LoginAction.OnLogin -> LoginEvent.Login
 
+            is LoginAction.OnTogglePasswordVisibility -> LoginEvent.TogglePasswordVisibility
+
             is LoginAction.OnNavigateToNewAccount -> LoginEvent.NavigateToNewAccount
 
-            is LoginAction.OnTogglePasswordVisibility -> LoginEvent.TogglePasswordVisibility
+            is LoginAction.OnNavigateToForgotPassword -> LoginEvent.NavigateToForgotPassword
         }
     }
 }
