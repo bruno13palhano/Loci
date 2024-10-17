@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,12 +15,11 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -42,6 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -65,9 +64,6 @@ internal fun LoginRoute(
 ) {
     val state by viewModel.state.collectAsState()
     val effects = rememberFlowWithLifecycle(flow = viewModel.effects)
-
-    val focusManager = LocalFocusManager.current
-    val keyboardController = LocalSoftwareKeyboardController.current
 
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
@@ -97,10 +93,7 @@ internal fun LoginRoute(
     }
 
     LoginContent(
-        modifier = modifier.clickableWithoutRipple {
-            keyboardController?.hide()
-            focusManager.clearFocus(force = true)
-        },
+        modifier = modifier,
         snackbarHostState = snackbarHostState,
         state = state,
         onAction = viewModel::onAction
@@ -115,8 +108,15 @@ private fun LoginContent(
     state: LoginState,
     onAction: (action: LoginAction) -> Unit
 ) {
+    val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     Scaffold(
         modifier = modifier
+            .clickableWithoutRipple {
+                keyboardController?.hide()
+                focusManager.clearFocus(force = true)
+            }
             .consumeWindowInsets(WindowInsets.statusBars)
             .consumeWindowInsets(WindowInsets.safeDrawing),
         topBar = {
@@ -124,15 +124,7 @@ private fun LoginContent(
                 title = { Text(text = stringResource(id = R.string.login)) }
             )
         },
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
-//        floatingActionButton = {
-//            FloatingActionButton(onClick = { onAction(LoginAction.OnLogin) }) {
-//                Icon(
-//                    imageVector = Icons.Filled.Done,
-//                    contentDescription = stringResource(id = R.string.done)
-//                )
-//            }
-//        }
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) {
         Column(
             modifier = Modifier
@@ -193,19 +185,64 @@ private fun LoginContent(
                 keyboardActions = KeyboardActions(onDone = { defaultKeyboardAction(ImeAction.Done) })
             )
 
-            Button(
-                modifier = Modifier
-                    .padding(32.dp)
-                    .fillMaxWidth(),
-                onClick = { /*TODO*/ }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
             ) {
-                Text(text = "Login")
+                TextButton(
+                    onClick = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus(force = true)
+                    }
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.forgot_password),
+                        textAlign = TextAlign.End,
+                        fontWeight = FontWeight.Medium
+                    )
+                }
             }
 
             Button(
-                onClick = { /*TODO*/ }
+                modifier = Modifier
+                    .padding(start = 32.dp, top = 32.dp, bottom = 24.dp, end = 32.dp)
+                    .fillMaxWidth(),
+                onClick = {
+                    keyboardController?.hide()
+                    focusManager.clearFocus(force = true)
+
+                    onAction(LoginAction.OnLogin)
+                }
             ) {
-                Text(text = "Create Account")
+                Text(text = stringResource(id = R.string.login))
+            }
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                HorizontalDivider(modifier = Modifier
+                    .padding(16.dp)
+                    .weight(1f))
+                Text(
+                    text = stringResource(id = R.string.or),
+                    fontWeight = FontWeight.Medium
+                )
+                HorizontalDivider(modifier = Modifier
+                    .padding(16.dp)
+                    .weight(1f))
+            }
+
+            Button(
+                modifier = Modifier.padding(top = 24.dp, bottom = 32.dp),
+                onClick = {
+                    keyboardController?.hide()
+                    focusManager.clearFocus(force = true)
+
+                    onAction(LoginAction.OnNavigateToNewAccount)
+                }
+            ) {
+                Text(text = stringResource(id = R.string.create_account))
             }
         }
     }
@@ -224,6 +261,23 @@ private fun LoginPreview() {
             },
             error = true,
             passwordVisible = true
+        )
+    ) {}
+}
+
+@Preview(device = "spec:parent=pixel_5,orientation=landscape")
+@Composable
+private fun LoginLandscapePreview() {
+    LoginContent(
+        snackbarHostState = SnackbarHostState(),
+        state = LoginState(
+            loading = false,
+            loginFields = LoginFields().apply {
+                updateEmail("user@email.com")
+                updatePassword("12345678")
+            },
+            error = false,
+            passwordVisible = false
         )
     ) {}
 }
