@@ -35,7 +35,6 @@ internal sealed interface LoginEvent : ViewEvent {
 
 @Immutable
 internal sealed interface LoginEffect : ViewEffect {
-    data object ShowLoading : LoginEffect
     data object ShowError : LoginEffect
     data object NavigateToHome: LoginEffect
     data object NavigateToNewAccount : LoginEffect
