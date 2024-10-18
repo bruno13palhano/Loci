@@ -5,7 +5,6 @@ import com.bruno13palhano.login.ui.login.presenter.LoginAction
 import com.bruno13palhano.login.ui.login.presenter.LoginActionProcessor
 import com.bruno13palhano.login.ui.login.presenter.LoginEffect
 import com.bruno13palhano.login.ui.login.presenter.LoginEvent
-import com.bruno13palhano.login.ui.login.presenter.LoginFields
 import com.bruno13palhano.login.ui.login.presenter.LoginReducer
 import com.bruno13palhano.login.ui.login.presenter.LoginState
 import com.bruno13palhano.login.ui.login.presenter.loginPresenter
@@ -16,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class LoginViewModel @Inject constructor(
-    private val loginFields: LoginFields
+
 ) : BaseViewModel<LoginState, LoginEvent, LoginEffect, LoginAction>(
     actionProcessor = LoginActionProcessor(),
     reducer = LoginReducer()
@@ -24,9 +23,9 @@ internal class LoginViewModel @Inject constructor(
     @Composable
     override fun states(events: Flow<LoginEvent>): LoginState {
         return loginPresenter(
-            loginFields = loginFields,
             reducer = reducer,
             events = events,
+            sendEvent = ::sendEvent,
             sendEffect = ::sendEffect
         )
     }
