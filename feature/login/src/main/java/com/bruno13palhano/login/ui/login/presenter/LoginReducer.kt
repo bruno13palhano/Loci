@@ -18,7 +18,10 @@ internal class LoginReducer: Reducer<LoginState, LoginEvent, LoginEffect> {
                 previousState.copy(passwordVisible = !previousState.passwordVisible) to null
             }
 
-            is LoginEvent.NavigateToHome -> previousState to LoginEffect.NavigateToHome
+            is LoginEvent.NavigateToHome -> previousState.copy(
+                loading = false,
+                error = false
+            ) to LoginEffect.NavigateToHome
 
             is LoginEvent.NavigateToNewAccount -> previousState to LoginEffect.NavigateToNewAccount
 
@@ -28,7 +31,7 @@ internal class LoginReducer: Reducer<LoginState, LoginEvent, LoginEffect> {
         }
     }
 
-    private fun login(previousState: LoginState): Pair<LoginState, LoginEffect> {
+    private fun login(previousState: LoginState): Pair<LoginState, LoginEffect?> {
         return if (previousState.loginFields.isValid()) {
             setValidLoginState(previousState = previousState)
         } else {
@@ -36,8 +39,8 @@ internal class LoginReducer: Reducer<LoginState, LoginEvent, LoginEffect> {
         }
     }
 
-    private fun setValidLoginState(previousState: LoginState): Pair<LoginState, LoginEffect> {
-        return previousState.copy(loading = true, error = false) to LoginEffect.ShowLoading
+    private fun setValidLoginState(previousState: LoginState): Pair<LoginState, LoginEffect?> {
+        return previousState.copy(loading = true, error = false) to null
     }
 
     private fun setInvalidLoginState(previousState: LoginState): Pair<LoginState, LoginEffect> {
