@@ -51,6 +51,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bruno13palhano.login.R
 import com.bruno13palhano.login.ui.login.viewmodel.LoginViewModel
+import com.bruno13palhano.ui.components.CircularProgress
 import com.bruno13palhano.ui.components.clickableWithoutRipple
 import com.bruno13palhano.ui.components.rememberFlowWithLifecycle
 import kotlinx.coroutines.launch
@@ -73,10 +74,6 @@ internal fun LoginRoute(
     LaunchedEffect(effects) {
         effects.collect { effect ->
             when (effect) {
-                is LoginEffect.ShowLoading -> {
-
-                }
-
                 is LoginEffect.ShowError -> {
                     scope.launch {
                         snackbarHostState.showSnackbar(
@@ -129,123 +126,138 @@ private fun LoginContent(
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) {
-        Column(
-            modifier = Modifier
-                .padding(it)
-                .consumeWindowInsets(it)
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            OutlinedTextField(
+        if (state.loading) {
+            CircularProgress(
                 modifier = Modifier
-                    .padding(horizontal = 8.dp)
-                    .fillMaxWidth(),
-                value = state.loginFields.email,
-                onValueChange = state.loginFields::updateEmail,
-                label = { Text(text = stringResource(id = R.string.email)) },
-                placeholder = { Text(text = stringResource(id = R.string.enter_email)) },
-                isError = state.error && state.loginFields.email.isBlank(),
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                keyboardActions = KeyboardActions(onDone = { defaultKeyboardAction(ImeAction.Done) })
+                    .padding(it)
+                    .consumeWindowInsets(it)
+                    .fillMaxSize()
             )
-
-            OutlinedTextField(
+        } else {
+            Column(
                 modifier = Modifier
-                    .padding(horizontal = 8.dp)
-                    .fillMaxWidth(),
-                value = state.loginFields.password,
-                onValueChange = state.loginFields::updatePassword,
-                label = { Text(text = stringResource(id = R.string.password)) },
-                placeholder = { Text(text = stringResource(id = R.string.enter_password)) },
-                isError = state.error && state.loginFields.password.isBlank(),
-                trailingIcon = {
-                    if (state.passwordVisible) {
-                        IconButton(onClick = { onAction(LoginAction.OnTogglePasswordVisibility) }) {
-                            Icon(
-                                imageVector = Icons.Filled.Visibility,
-                                contentDescription = null
-                            )
-                        }
-                    } else {
-                        IconButton(onClick = { onAction(LoginAction.OnTogglePasswordVisibility) }) {
-                            Icon(
-                                imageVector = Icons.Filled.VisibilityOff,
-                                contentDescription = null
-                            )
-                        }
-                    }
-                },
-                visualTransformation = if (state.passwordVisible) {
-                    VisualTransformation.None
-                } else {
-                    PasswordVisualTransformation()
-                },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Password,
-                    imeAction = ImeAction.Done
-                ),
-                keyboardActions = KeyboardActions(onDone = { defaultKeyboardAction(ImeAction.Done) })
-            )
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
+                    .padding(it)
+                    .consumeWindowInsets(it)
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                TextButton(
+                OutlinedTextField(
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp)
+                        .fillMaxWidth(),
+                    value = state.loginFields.email,
+                    onValueChange = state.loginFields::updateEmail,
+                    label = { Text(text = stringResource(id = R.string.email)) },
+                    placeholder = { Text(text = stringResource(id = R.string.enter_email)) },
+                    isError = state.error && state.loginFields.email.isBlank(),
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                    keyboardActions = KeyboardActions(onDone = { defaultKeyboardAction(ImeAction.Done) })
+                )
+
+                OutlinedTextField(
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp)
+                        .fillMaxWidth(),
+                    value = state.loginFields.password,
+                    onValueChange = state.loginFields::updatePassword,
+                    label = { Text(text = stringResource(id = R.string.password)) },
+                    placeholder = { Text(text = stringResource(id = R.string.enter_password)) },
+                    isError = state.error && state.loginFields.password.isBlank(),
+                    trailingIcon = {
+                        if (state.passwordVisible) {
+                            IconButton(onClick = { onAction(LoginAction.OnTogglePasswordVisibility) }) {
+                                Icon(
+                                    imageVector = Icons.Filled.Visibility,
+                                    contentDescription = null
+                                )
+                            }
+                        } else {
+                            IconButton(onClick = { onAction(LoginAction.OnTogglePasswordVisibility) }) {
+                                Icon(
+                                    imageVector = Icons.Filled.VisibilityOff,
+                                    contentDescription = null
+                                )
+                            }
+                        }
+                    },
+                    visualTransformation = if (state.passwordVisible) {
+                        VisualTransformation.None
+                    } else {
+                        PasswordVisualTransformation()
+                    },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Password,
+                        imeAction = ImeAction.Done
+                    ),
+                    keyboardActions = KeyboardActions(onDone = { defaultKeyboardAction(ImeAction.Done) })
+                )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    TextButton(
+                        onClick = {
+                            keyboardController?.hide()
+                            focusManager.clearFocus(force = true)
+
+                            onAction(LoginAction.OnNavigateToForgotPassword)
+                        }
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.forgot_password),
+                            textAlign = TextAlign.End,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
+                }
+
+                Button(
+                    modifier = Modifier
+                        .padding(start = 32.dp, top = 32.dp, bottom = 24.dp, end = 32.dp)
+                        .fillMaxWidth(),
                     onClick = {
                         keyboardController?.hide()
                         focusManager.clearFocus(force = true)
+
+                        onAction(LoginAction.OnLogin)
                     }
                 ) {
+                    Text(text = stringResource(id = R.string.login))
+                }
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    HorizontalDivider(
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .weight(1f)
+                    )
                     Text(
-                        text = stringResource(id = R.string.forgot_password),
-                        textAlign = TextAlign.End,
+                        text = stringResource(id = R.string.or),
                         fontWeight = FontWeight.Medium
                     )
+                    HorizontalDivider(
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .weight(1f)
+                    )
                 }
-            }
 
-            Button(
-                modifier = Modifier
-                    .padding(start = 32.dp, top = 32.dp, bottom = 24.dp, end = 32.dp)
-                    .fillMaxWidth(),
-                onClick = {
-                    keyboardController?.hide()
-                    focusManager.clearFocus(force = true)
+                Button(
+                    modifier = Modifier.padding(top = 24.dp, bottom = 32.dp),
+                    onClick = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus(force = true)
 
-                    onAction(LoginAction.OnLogin)
+                        onAction(LoginAction.OnNavigateToNewAccount)
+                    }
+                ) {
+                    Text(text = stringResource(id = R.string.create_account))
                 }
-            ) {
-                Text(text = stringResource(id = R.string.login))
-            }
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                HorizontalDivider(modifier = Modifier
-                    .padding(16.dp)
-                    .weight(1f))
-                Text(
-                    text = stringResource(id = R.string.or),
-                    fontWeight = FontWeight.Medium
-                )
-                HorizontalDivider(modifier = Modifier
-                    .padding(16.dp)
-                    .weight(1f))
-            }
-
-            Button(
-                modifier = Modifier.padding(top = 24.dp, bottom = 32.dp),
-                onClick = {
-                    keyboardController?.hide()
-                    focusManager.clearFocus(force = true)
-
-                    onAction(LoginAction.OnNavigateToNewAccount)
-                }
-            ) {
-                Text(text = stringResource(id = R.string.create_account))
             }
         }
     }
@@ -258,6 +270,23 @@ private fun LoginPreview() {
         snackbarHostState = SnackbarHostState(),
         state = LoginState(
             loading = false,
+            loginFields = LoginFields().apply {
+                updateEmail("")
+                updatePassword("12345678")
+            },
+            error = true,
+            passwordVisible = true
+        )
+    ) {}
+}
+
+@Preview
+@Composable
+private fun LoginLoadingPreview() {
+    LoginContent(
+        snackbarHostState = SnackbarHostState(),
+        state = LoginState(
+            loading = true,
             loginFields = LoginFields().apply {
                 updateEmail("")
                 updatePassword("12345678")
