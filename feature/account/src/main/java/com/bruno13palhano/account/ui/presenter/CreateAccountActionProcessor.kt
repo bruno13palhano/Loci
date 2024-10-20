@@ -5,15 +5,17 @@ import com.bruno13palhano.ui.shared.ActionProcessor
 internal class CreateAccountActionProcessor : ActionProcessor<CreateAccountAction, CreateAccountEvent> {
     override fun process(action: CreateAccountAction): CreateAccountEvent {
         return when (action) {
-            CreateAccountAction.OnDone -> CreateAccountEvent.Done
+            is CreateAccountAction.OnDone -> CreateAccountEvent.Done
 
-            CreateAccountAction.OnTogglePasswordVisibility -> {
+            is CreateAccountAction.OnTogglePasswordVisibility -> {
                 CreateAccountEvent.TogglePasswordVisibility
             }
 
-            CreateAccountAction.OnToggleConfirmPasswordVisibility -> {
+            is CreateAccountAction.OnToggleConfirmPasswordVisibility -> {
                 CreateAccountEvent.ToggleConfirmPasswordVisibility
             }
+
+            is CreateAccountAction.OnNavigateBack -> CreateAccountEvent.NavigateBack
         }
     }
 }

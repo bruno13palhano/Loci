@@ -8,29 +8,36 @@ internal class CreateAccountReducer : Reducer<CreateAccountState, CreateAccountE
         event: CreateAccountEvent
     ): Pair<CreateAccountState, CreateAccountEffect?> {
         return when (event) {
-            CreateAccountEvent.Done -> {
+            is CreateAccountEvent.Done -> {
                 previousState.copy(loading = true, error = false) to null
             }
 
-            CreateAccountEvent.Error -> {
+            is CreateAccountEvent.Error -> {
                 previousState.copy(loading = false, error = true) to CreateAccountEffect.ShowError
             }
 
-            CreateAccountEvent.TogglePasswordVisibility -> {
+            is CreateAccountEvent.TogglePasswordVisibility -> {
                 previousState.copy(passwordVisible = !previousState.passwordVisible) to null
             }
 
-            CreateAccountEvent.ToggleConfirmPasswordVisibility -> {
+            is CreateAccountEvent.ToggleConfirmPasswordVisibility -> {
                 previousState.copy(
                     confirmPasswordVisible = !previousState.confirmPasswordVisible
                 ) to null
             }
 
-            CreateAccountEvent.NavigateToHome -> {
+            is CreateAccountEvent.NavigateToHome -> {
                 previousState.copy(
                     loading = false,
                     error = false
                 ) to CreateAccountEffect.NavigateToHome
+            }
+
+            is CreateAccountEvent.NavigateBack -> {
+                previousState.copy(
+                    loading = false,
+                    error = false
+                ) to CreateAccountEffect.NavigateBack
             }
         }
     }
