@@ -8,6 +8,7 @@ import kotlinx.serialization.Serializable
 
 fun NavGraphBuilder.createAccountScreen(
     modifier: Modifier = Modifier,
+    navigateToHome: () -> Unit,
     navigateBack: () -> Unit,
     showBottomMenu: (show: Boolean) -> Unit
 ) {
@@ -15,6 +16,7 @@ fun NavGraphBuilder.createAccountScreen(
         showBottomMenu(false)
         CreateAccountRoute(
             modifier = modifier,
+            navigateToHome = navigateToHome,
             navigateBack = navigateBack
         )
     }
