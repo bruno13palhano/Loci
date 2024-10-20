@@ -11,18 +11,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -41,10 +33,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -52,6 +40,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.bruno13palhano.login.R
 import com.bruno13palhano.login.ui.login.viewmodel.LoginViewModel
 import com.bruno13palhano.ui.components.CircularProgress
+import com.bruno13palhano.ui.components.CustomPasswordTextField
+import com.bruno13palhano.ui.components.CustomTextField
 import com.bruno13palhano.ui.components.clickableWithoutRipple
 import com.bruno13palhano.ui.components.rememberFlowWithLifecycle
 import kotlinx.coroutines.launch
@@ -142,55 +132,28 @@ private fun LoginContent(
                     .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                OutlinedTextField(
+                CustomTextField(
                     modifier = Modifier
                         .padding(horizontal = 8.dp)
                         .fillMaxWidth(),
                     value = state.loginFields.email,
                     onValueChange = state.loginFields::updateEmail,
-                    label = { Text(text = stringResource(id = R.string.email)) },
-                    placeholder = { Text(text = stringResource(id = R.string.enter_email)) },
+                    label = stringResource(id = R.string.email),
+                    placeholder = stringResource(id = R.string.enter_email),
                     isError = state.error && state.loginFields.email.isBlank(),
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                    keyboardActions = KeyboardActions(onDone = { defaultKeyboardAction(ImeAction.Done) })
                 )
 
-                OutlinedTextField(
+                CustomPasswordTextField(
                     modifier = Modifier
                         .padding(horizontal = 8.dp)
                         .fillMaxWidth(),
+                    visibility = state.passwordVisible,
                     value = state.loginFields.password,
                     onValueChange = state.loginFields::updatePassword,
-                    label = { Text(text = stringResource(id = R.string.password)) },
-                    placeholder = { Text(text = stringResource(id = R.string.enter_password)) },
+                    label = stringResource(id = R.string.password),
+                    placeholder = stringResource(id = R.string.enter_password),
                     isError = state.error && state.loginFields.password.isBlank(),
-                    trailingIcon = {
-                        if (state.passwordVisible) {
-                            IconButton(onClick = { onAction(LoginAction.OnTogglePasswordVisibility) }) {
-                                Icon(
-                                    imageVector = Icons.Filled.Visibility,
-                                    contentDescription = null
-                                )
-                            }
-                        } else {
-                            IconButton(onClick = { onAction(LoginAction.OnTogglePasswordVisibility) }) {
-                                Icon(
-                                    imageVector = Icons.Filled.VisibilityOff,
-                                    contentDescription = null
-                                )
-                            }
-                        }
-                    },
-                    visualTransformation = if (state.passwordVisible) {
-                        VisualTransformation.None
-                    } else {
-                        PasswordVisualTransformation()
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Password,
-                        imeAction = ImeAction.Done
-                    ),
-                    keyboardActions = KeyboardActions(onDone = { defaultKeyboardAction(ImeAction.Done) })
+                    togglePasswordVisibility = { onAction(LoginAction.OnTogglePasswordVisibility) }
                 )
 
                 Row(
