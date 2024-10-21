@@ -9,36 +9,88 @@ internal class CreateAccountReducer : Reducer<CreateAccountState, CreateAccountE
     ): Pair<CreateAccountState, CreateAccountEffect?> {
         return when (event) {
             is CreateAccountEvent.Done -> {
-                previousState.copy(loading = true, error = false) to null
+                done(previousState = previousState)
             }
 
             is CreateAccountEvent.Error -> {
-                previousState.copy(loading = false, error = true) to CreateAccountEffect.ShowError
+                error(previousState = previousState)
             }
 
             is CreateAccountEvent.TogglePasswordVisibility -> {
-                previousState.copy(passwordVisible = !previousState.passwordVisible) to null
+                togglePasswordVisibility(previousState = previousState)
             }
 
             is CreateAccountEvent.ToggleConfirmPasswordVisibility -> {
-                previousState.copy(
-                    confirmPasswordVisible = !previousState.confirmPasswordVisible
-                ) to null
+                toggleConfirmPasswordVisibility(previousState = previousState)
             }
 
             is CreateAccountEvent.NavigateToHome -> {
-                previousState.copy(
-                    loading = false,
-                    error = false
-                ) to CreateAccountEffect.NavigateToHome
+                navigateToHome(previousState = previousState)
             }
 
             is CreateAccountEvent.NavigateBack -> {
-                previousState.copy(
-                    loading = false,
-                    error = false
-                ) to CreateAccountEffect.NavigateBack
+                navigateBack(previousState = previousState)
             }
         }
+    }
+
+    private fun done(
+        previousState: CreateAccountState
+    ): Pair<CreateAccountState, CreateAccountEffect?> {
+        return if (previousState.createAccountFields.isValid()) {
+            setValidCreateAccountState(previousState = previousState)
+        } else {
+            setInvalidCreateAccountState(previousState = previousState)
+        }
+    }
+
+    private fun setValidCreateAccountState(
+        previousState: CreateAccountState
+    ): Pair<CreateAccountState, CreateAccountEffect?> {
+        return previousState.copy(loading = true, error = false) to null
+    }
+
+    private fun setInvalidCreateAccountState(
+        previousState: CreateAccountState
+    ): Pair<CreateAccountState, CreateAccountEffect?> {
+        return previousState.copy(loading = false, error = true) to CreateAccountEffect.ShowError
+    }
+
+    private fun error(
+        previousState: CreateAccountState
+    ): Pair<CreateAccountState, CreateAccountEffect?> {
+        return previousState.copy(loading = false, error = true) to CreateAccountEffect.ShowError
+    }
+
+    private fun togglePasswordVisibility(
+        previousState: CreateAccountState
+    ): Pair<CreateAccountState, CreateAccountEffect?> {
+        return previousState.copy(passwordVisible = !previousState.passwordVisible) to null
+    }
+
+    private fun toggleConfirmPasswordVisibility(
+        previousState: CreateAccountState
+    ): Pair<CreateAccountState, CreateAccountEffect?> {
+        return previousState.copy(
+            confirmPasswordVisible = !previousState.confirmPasswordVisible
+        ) to null
+    }
+
+    private fun navigateToHome(
+        previousState: CreateAccountState
+    ): Pair<CreateAccountState, CreateAccountEffect?> {
+        return previousState.copy(
+            loading = false,
+            error = false
+        ) to CreateAccountEffect.NavigateToHome
+    }
+
+    private fun navigateBack(
+        previousState: CreateAccountState
+    ): Pair<CreateAccountState, CreateAccountEffect?> {
+        return previousState.copy(
+            loading = false,
+            error = false
+        ) to CreateAccountEffect.NavigateBack
     }
 }
