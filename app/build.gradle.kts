@@ -88,6 +88,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(project(":feature:login"))
     implementation(project(":feature:account"))
+    implementation(project(":feature:forgotpassword"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
