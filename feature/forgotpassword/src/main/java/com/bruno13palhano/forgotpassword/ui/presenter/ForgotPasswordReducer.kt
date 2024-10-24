@@ -12,7 +12,21 @@ internal class ForgotPasswordReducer : Reducer<ForgotPasswordState, ForgotPasswo
 
             is ForgotPasswordEvent.UpdatePassword -> updatePassword(previousState = previousState)
 
-            is ForgotPasswordEvent.Error -> error(previousState = previousState)
+            is ForgotPasswordEvent.CancelUpdatePassword -> {
+                cancelUpdatePassword(previousState = previousState)
+            }
+
+            is ForgotPasswordEvent.TogglePasswordVisibility -> {
+                togglePasswordVisibility(previousState = previousState)
+            }
+
+            is ForgotPasswordEvent.ToggleConfirmPasswordVisibility -> {
+                toggleConfirmPasswordVisibility(previousState = previousState)
+            }
+
+            is ForgotPasswordEvent.InternalError -> {
+                internalError(previousState = previousState, errorType = event.errorType)
+            }
 
             is ForgotPasswordEvent.NavigateToHome -> navigateToHome(previousState = previousState)
 
@@ -26,13 +40,15 @@ internal class ForgotPasswordReducer : Reducer<ForgotPasswordState, ForgotPasswo
         return if (previousState.forgotPasswordFields.isEmailValid()) {
             previousState.copy(
                 loading = true,
-                error = false
+                invalidFields = false,
+                showErrorInfo = false
             ) to null
         } else {
             previousState.copy(
                 loading = false,
-                error = true
-            ) to ForgotPasswordEffect.ShowError
+                invalidFields = true,
+                showErrorInfo = true
+            ) to ForgotPasswordEffect.ShowErrorInfo(errorType = ErrorType.InvalidEmail)
         }
     }
 
@@ -42,23 +58,51 @@ internal class ForgotPasswordReducer : Reducer<ForgotPasswordState, ForgotPasswo
         return if (previousState.forgotPasswordFields.isPasswordValid()) {
             previousState.copy(
                 loading = true,
-                error = false
+                invalidFields = false,
+                showErrorInfo = false
             ) to ForgotPasswordEffect.NavigateToHome
         } else {
             previousState.copy(
                 loading = false,
-                error = true
-            ) to ForgotPasswordEffect.ShowError
+                invalidFields = true,
+                showErrorInfo = true
+            ) to ForgotPasswordEffect.ShowErrorInfo(errorType = ErrorType.PasswordDoesNotMatch)
         }
     }
 
-    private fun error(
+    private fun cancelUpdatePassword(
         previousState: ForgotPasswordState
     ): Pair<ForgotPasswordState, ForgotPasswordEffect?> {
         return previousState.copy(
+            emailVerified = false
+        ) to null
+    }
+
+    private fun togglePasswordVisibility(
+        previousState: ForgotPasswordState
+    ): Pair<ForgotPasswordState, ForgotPasswordEffect?> {
+        return previousState.copy(
+            passwordVisible = !previousState.passwordVisible
+        ) to null
+    }
+
+    private fun toggleConfirmPasswordVisibility(
+        previousState: ForgotPasswordState
+    ): Pair<ForgotPasswordState, ForgotPasswordEffect?> {
+        return previousState.copy(
+            confirmPasswordVisible = !previousState.confirmPasswordVisible
+        ) to null
+    }
+
+    private fun internalError(
+        previousState: ForgotPasswordState,
+        errorType: ErrorType
+    ): Pair<ForgotPasswordState, ForgotPasswordEffect?> {
+        return previousState.copy(
             loading = false,
-            error = true
-        ) to ForgotPasswordEffect.ShowError
+            internalError = true,
+            showErrorInfo = true
+        ) to ForgotPasswordEffect.ShowErrorInfo(errorType = errorType)
     }
 
     private fun navigateToHome(
@@ -66,7 +110,7 @@ internal class ForgotPasswordReducer : Reducer<ForgotPasswordState, ForgotPasswo
     ): Pair<ForgotPasswordState, ForgotPasswordEffect?> {
         return previousState.copy(
             loading = false,
-            error = false
+            internalError = false
         ) to ForgotPasswordEffect.NavigateToHome
     }
 
@@ -75,7 +119,7 @@ internal class ForgotPasswordReducer : Reducer<ForgotPasswordState, ForgotPasswo
     ): Pair<ForgotPasswordState, ForgotPasswordEffect?> {
         return previousState.copy(
             loading = false,
-            error = false
+            internalError = false
         ) to ForgotPasswordEffect.NavigateBack
     }
 }
