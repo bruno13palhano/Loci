@@ -9,6 +9,18 @@ internal class ForgotPasswordActionProcess : ActionProcessor<ForgotPasswordActio
 
             is ForgotPasswordAction.OnUpdatePassword -> ForgotPasswordEvent.UpdatePassword
 
+            is ForgotPasswordAction.OnTogglePasswordVisibility -> {
+                ForgotPasswordEvent.TogglePasswordVisibility
+            }
+
+            is ForgotPasswordAction.OnToggleConfirmPasswordVisibility -> {
+                ForgotPasswordEvent.ToggleConfirmPasswordVisibility
+            }
+
+            is ForgotPasswordAction.OnCancelUpdatePassword -> {
+                ForgotPasswordEvent.CancelUpdatePassword
+            }
+
             is ForgotPasswordAction.OnNavigateBack -> ForgotPasswordEvent.NavigateBack
         }
     }
