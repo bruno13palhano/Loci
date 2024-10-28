@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import com.bruno13palhano.messages.ui.presenter.MessagesRoute
 import kotlinx.serialization.Serializable
 
-fun NavGraphBuilder.messagesNavigation(
+fun NavGraphBuilder.messagesScreen(
     modifier: Modifier = Modifier,
     showBottomMenu: (show: Boolean) -> Unit
 ) {
