@@ -7,27 +7,27 @@ import com.bruno13palhano.ui.shared.ViewEvent
 import com.bruno13palhano.ui.shared.ViewState
 
 @Immutable
-internal data class HomeState(
+internal data class ProfileState(
     val loading: Boolean
 ) : ViewState {
     companion object {
-        val Initial = HomeState(
+        val Initial = ProfileState(
             loading = false
         )
     }
 }
 
 @Immutable
-internal sealed interface HomeEvent : ViewEvent {
-    data object Refresh : HomeEvent
+internal sealed interface ProfileEvent : ViewEvent {
+    data object Refresh : ProfileEvent
 }
 
 @Immutable
-internal sealed interface HomeEffect : ViewEffect {
-    data object ShowErrorInfo : HomeEffect
+internal sealed interface ProfileEffect : ViewEffect {
+    data object ShowErrorInfo : ProfileEffect
 }
 
 @Immutable
-internal sealed interface HomeAction : ViewAction {
-    data object OnRefresh : HomeAction
+internal sealed interface ProfileAction : ViewAction {
+    data object OnRefresh : ProfileAction
 }
