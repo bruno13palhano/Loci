@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Loci</string>
+    <string name="home">Home</string>
+    <string name="workspace">Workspace</string>
+    <string name="messages">Messages</string>
+    <string name="profile">Profile</string>
 </resources>
