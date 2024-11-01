@@ -8,11 +8,13 @@ import com.bruno13palhano.ui.shared.ViewState
 
 @Immutable
 internal data class HomeState(
-    val loading: Boolean
+    val loading: Boolean,
+    val authenticated: Boolean
 ) : ViewState {
     companion object {
         val Initial = HomeState(
-            loading = false
+            loading = false,
+            authenticated = false
         )
     }
 }
@@ -20,14 +22,16 @@ internal data class HomeState(
 @Immutable
 internal sealed interface HomeEvent : ViewEvent {
     data object Refresh : HomeEvent
+    data object NavigateToLogin : HomeEvent
 }
 
 @Immutable
 internal sealed interface HomeEffect : ViewEffect {
     data object ShowErrorInfo : HomeEffect
+    data object NavigateToLogin : HomeEffect
 }
 
 @Immutable
 internal sealed interface HomeAction : ViewAction {
-    data object Refresh : HomeAction
+    data object OnRefresh : HomeAction
 }
