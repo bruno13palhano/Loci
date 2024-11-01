@@ -2,7 +2,10 @@ package com.bruno13palhano.loci.ui.menu
 
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Login
+import androidx.compose.material.icons.automirrored.filled.Message
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Workspaces
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -17,15 +20,23 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.bruno13palhano.home.navigation.HomeRoutes
 import com.bruno13palhano.loci.R
-import com.bruno13palhano.login.navigation.LoginRoutes
+import com.bruno13palhano.messages.navigation.MessagesRoutes
+import com.bruno13palhano.profile.navigation.ProfileRoutes
+import com.bruno13palhano.workspace.navigation.WorkspaceRoutes
 
 @Composable
 fun BottomMenu(
     modifier: Modifier = Modifier,
     navController: NavController
 ) {
-    val items = listOf(Screen.Login)
+    val items = listOf(
+        Screen.Home,
+        Screen.Workspace,
+        Screen.Messages,
+        Screen.Profile
+    )
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -68,9 +79,27 @@ sealed class Screen<T>(
     val icon: ImageVector,
     @StringRes val resourceId: Int
 ) {
-    data object Login : Screen<LoginRoutes>(
-        route = LoginRoutes.Login,
-        icon = Icons.AutoMirrored.Filled.Login,
-        resourceId = R.string.app_name
+    data object Home : Screen<HomeRoutes>(
+        route = HomeRoutes.Home,
+        icon = Icons.Filled.Home,
+        resourceId = R.string.home
+    )
+
+    data object Workspace : Screen<WorkspaceRoutes>(
+        route = WorkspaceRoutes.Workspace,
+        icon = Icons.Filled.Workspaces,
+        resourceId = R.string.workspace
+    )
+
+    data object Messages : Screen<MessagesRoutes>(
+        route = MessagesRoutes.Messages,
+        icon = Icons.AutoMirrored.Filled.Message,
+        resourceId = R.string.messages
+    )
+
+    data object Profile : Screen<ProfileRoutes>(
+        route = ProfileRoutes.Profile,
+        icon = Icons.Filled.Person,
+        resourceId = R.string.profile
     )
 }
