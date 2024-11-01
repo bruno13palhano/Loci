@@ -8,10 +8,10 @@ import com.bruno13palhano.ui.shared.ViewState
 
 @Immutable
 internal data class WorkspaceState(
-    val loading: Boolean = true
+    val loading: Boolean
 ) : ViewState {
     companion object {
-        val Initial = WorkspaceState()
+        val Initial = WorkspaceState(loading = false)
     }
 }
 
