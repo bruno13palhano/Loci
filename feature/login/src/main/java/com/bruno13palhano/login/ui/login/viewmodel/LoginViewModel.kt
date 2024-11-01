@@ -1,6 +1,8 @@
 package com.bruno13palhano.login.ui.login.viewmodel
 
 import androidx.compose.runtime.Composable
+import com.bruno13palhano.data.di.UserRep
+import com.bruno13palhano.data.user.UserRepository
 import com.bruno13palhano.login.ui.login.presenter.LoginAction
 import com.bruno13palhano.login.ui.login.presenter.LoginActionProcessor
 import com.bruno13palhano.login.ui.login.presenter.LoginEffect
@@ -15,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class LoginViewModel @Inject constructor(
-
+    @UserRep private val userRepository: UserRepository
 ) : BaseViewModel<LoginState, LoginEvent, LoginEffect, LoginAction>(
     actionProcessor = LoginActionProcessor(),
     reducer = LoginReducer()
@@ -23,6 +25,7 @@ internal class LoginViewModel @Inject constructor(
     @Composable
     override fun states(events: Flow<LoginEvent>): LoginState {
         return loginPresenter(
+            repository = userRepository,
             reducer = reducer,
             events = events,
             sendEvent = ::sendEvent,
