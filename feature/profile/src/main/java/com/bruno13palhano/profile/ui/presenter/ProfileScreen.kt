@@ -24,6 +24,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bruno13palhano.profile.R
 import com.bruno13palhano.profile.ui.viewmodel.ProfileViewModel
@@ -100,4 +101,16 @@ private fun ProfileContent(
             }
         }
     }
+}
+
+@Preview
+@Composable
+private fun ProfilePreview() {
+    ProfileContent(
+        snackbarHostState = SnackbarHostState(),
+        state = ProfileState(
+            loading = false
+        ),
+        onAction = {}
+    )
 }
