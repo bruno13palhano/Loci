@@ -42,6 +42,7 @@ import kotlinx.coroutines.launch
 @Composable
 internal fun HomeRoute(
     modifier: Modifier = Modifier,
+    navigateToLogin: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
@@ -61,6 +62,8 @@ internal fun HomeRoute(
                         )
                     }
                 }
+
+                is HomeEffect.NavigateToLogin -> navigateToLogin()
             }
         }
     }
@@ -131,7 +134,8 @@ fun HomePreview() {
     HomeContent(
         snackbarHostState = SnackbarHostState(),
         state = HomeState(
-            loading = false
+            loading = false,
+            authenticated = false
         ),
         onAction = {}
     )

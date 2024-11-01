@@ -8,11 +8,12 @@ import kotlinx.serialization.Serializable
 
 fun NavGraphBuilder.homeScreen(
     modifier: Modifier = Modifier,
-    showBottomMenu: (show: Boolean) -> Unit
+    showBottomMenu: (show: Boolean) -> Unit,
+    navigateToLogin: () -> Unit
 ) {
     composable<HomeRoutes.Home> {
         showBottomMenu(true)
-        HomeRoute(modifier = modifier)
+        HomeRoute(modifier = modifier, navigateToLogin = navigateToLogin)
     }
 }
 
