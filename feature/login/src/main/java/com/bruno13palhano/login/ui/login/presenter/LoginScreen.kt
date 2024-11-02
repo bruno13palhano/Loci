@@ -29,8 +29,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -61,6 +63,9 @@ internal fun LoginRoute(
     val scope = rememberCoroutineScope()
     val fillFieldsErrorMessage = stringResource(id = R.string.fill_all_fields)
 
+    val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     LaunchedEffect(effects) {
         effects.collect { effect ->
             when (effect) {
@@ -73,11 +78,39 @@ internal fun LoginRoute(
                     }
                 }
 
-                is LoginEffect.NavigateToHome -> navigateToHome()
+                is LoginEffect.DismissKeyboard -> {
+                    clearFocusAndDismissKeyboard(
+                        focusManager = focusManager,
+                        keyboardController = keyboardController
+                    )
+                }
 
-                is LoginEffect.NavigateToNewAccount -> navigateToNewAccount()
+                is LoginEffect.NavigateToHome -> {
+                    clearFocusAndDismissKeyboard(
+                        focusManager = focusManager,
+                        keyboardController = keyboardController
+                    )
 
-                is LoginEffect.NavigateToForgotPassword -> navigateToForgotPassword()
+                    navigateToHome()
+                }
+
+                is LoginEffect.NavigateToNewAccount -> {
+                    clearFocusAndDismissKeyboard(
+                        focusManager = focusManager,
+                        keyboardController = keyboardController
+                    )
+
+                    navigateToNewAccount()
+                }
+
+                is LoginEffect.NavigateToForgotPassword -> {
+                    clearFocusAndDismissKeyboard(
+                        focusManager = focusManager,
+                        keyboardController = keyboardController
+                    )
+
+                    navigateToForgotPassword()
+                }
             }
         }
     }
@@ -98,15 +131,9 @@ private fun LoginContent(
     state: LoginState,
     onAction: (action: LoginAction) -> Unit
 ) {
-    val focusManager = LocalFocusManager.current
-    val keyboardController = LocalSoftwareKeyboardController.current
-
     Scaffold(
         modifier = modifier
-            .clickableWithoutRipple {
-                keyboardController?.hide()
-                focusManager.clearFocus(force = true)
-            }
+            .clickableWithoutRipple { onAction(LoginAction.OnDismissKeyboard) }
             .consumeWindowInsets(WindowInsets.statusBars)
             .consumeWindowInsets(WindowInsets.safeDrawing),
         topBar = {
@@ -160,14 +187,7 @@ private fun LoginContent(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
                 ) {
-                    TextButton(
-                        onClick = {
-                            keyboardController?.hide()
-                            focusManager.clearFocus(force = true)
-
-                            onAction(LoginAction.OnNavigateToForgotPassword)
-                        }
-                    ) {
+                    TextButton(onClick = { onAction(LoginAction.OnNavigateToForgotPassword) }) {
                         Text(
                             text = stringResource(id = R.string.forgot_password),
                             textAlign = TextAlign.End,
@@ -180,12 +200,7 @@ private fun LoginContent(
                     modifier = Modifier
                         .padding(start = 32.dp, top = 32.dp, bottom = 24.dp, end = 32.dp)
                         .fillMaxWidth(),
-                    onClick = {
-                        keyboardController?.hide()
-                        focusManager.clearFocus(force = true)
-
-                        onAction(LoginAction.OnLogin)
-                    }
+                    onClick = { onAction(LoginAction.OnLogin) }
                 ) {
                     Text(text = stringResource(id = R.string.login))
                 }
@@ -212,18 +227,21 @@ private fun LoginContent(
 
                 Button(
                     modifier = Modifier.padding(top = 24.dp, bottom = 32.dp),
-                    onClick = {
-                        keyboardController?.hide()
-                        focusManager.clearFocus(force = true)
-
-                        onAction(LoginAction.OnNavigateToNewAccount)
-                    }
+                    onClick = { onAction(LoginAction.OnNavigateToNewAccount) }
                 ) {
                     Text(text = stringResource(id = R.string.create_account))
                 }
             }
         }
     }
+}
+
+private fun clearFocusAndDismissKeyboard(
+    focusManager: FocusManager,
+    keyboardController: SoftwareKeyboardController?
+) {
+    focusManager.clearFocus(force = true)
+    keyboardController?.hide()
 }
 
 @Preview
