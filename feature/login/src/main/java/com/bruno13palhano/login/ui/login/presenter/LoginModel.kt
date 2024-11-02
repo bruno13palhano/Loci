@@ -29,18 +29,14 @@ internal sealed interface LoginEvent : ViewEvent {
     data object Error : LoginEvent
     data object TogglePasswordVisibility : LoginEvent
     data object DismissKeyboard : LoginEvent
-    data object NavigateToHome : LoginEvent
-    data object NavigateToNewAccount : LoginEvent
-    data object NavigateToForgotPassword : LoginEvent
+    data class NavigateTo(val destination: LoginDestination) : LoginEvent
 }
 
 @Immutable
 internal sealed interface LoginEffect : ViewEffect {
     data object ShowError : LoginEffect
     data object DismissKeyboard : LoginEffect
-    data object NavigateToHome: LoginEffect
-    data object NavigateToNewAccount : LoginEffect
-    data object NavigateToForgotPassword : LoginEffect
+    data class NavigateTo(val destination: LoginDestination) : LoginEffect
 }
 
 @Immutable
@@ -48,6 +44,12 @@ internal sealed interface LoginAction : ViewAction {
     data object OnLogin : LoginAction
     data object OnTogglePasswordVisibility : LoginAction
     data object OnDismissKeyboard : LoginAction
-    data object OnNavigateToNewAccount : LoginAction
-    data object OnNavigateToForgotPassword : LoginAction
+    data class OnNavigateTo(val destination: LoginDestination) : LoginAction
+}
+
+@Immutable
+internal sealed interface LoginDestination {
+    data object Home : LoginDestination
+    data object NewAccount : LoginDestination
+    data object ForgotPassword : LoginDestination
 }

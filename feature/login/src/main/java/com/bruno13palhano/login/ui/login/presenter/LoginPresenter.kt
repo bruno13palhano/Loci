@@ -66,6 +66,6 @@ private fun Login(
 
         delay(4000)
 
-        sendEvent(LoginEvent.NavigateToHome)
+        sendEvent(LoginEvent.NavigateTo(destination = LoginDestination.Home))
     }
 }

@@ -85,31 +85,19 @@ internal fun LoginRoute(
                     )
                 }
 
-                is LoginEffect.NavigateToHome -> {
+                is LoginEffect.NavigateTo -> {
                     clearFocusAndDismissKeyboard(
                         focusManager = focusManager,
                         keyboardController = keyboardController
                     )
 
-                    navigateToHome()
-                }
+                    when (effect.destination) {
+                        is LoginDestination.Home -> navigateToHome()
 
-                is LoginEffect.NavigateToNewAccount -> {
-                    clearFocusAndDismissKeyboard(
-                        focusManager = focusManager,
-                        keyboardController = keyboardController
-                    )
+                        is LoginDestination.ForgotPassword -> navigateToForgotPassword()
 
-                    navigateToNewAccount()
-                }
-
-                is LoginEffect.NavigateToForgotPassword -> {
-                    clearFocusAndDismissKeyboard(
-                        focusManager = focusManager,
-                        keyboardController = keyboardController
-                    )
-
-                    navigateToForgotPassword()
+                        is LoginDestination.NewAccount -> navigateToNewAccount()
+                    }
                 }
             }
         }
@@ -187,7 +175,13 @@ private fun LoginContent(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
                 ) {
-                    TextButton(onClick = { onAction(LoginAction.OnNavigateToForgotPassword) }) {
+                    TextButton(
+                        onClick = {
+                            onAction(
+                                LoginAction.OnNavigateTo(destination = LoginDestination.ForgotPassword)
+                            )
+                        }
+                    ) {
                         Text(
                             text = stringResource(id = R.string.forgot_password),
                             textAlign = TextAlign.End,
@@ -227,7 +221,9 @@ private fun LoginContent(
 
                 Button(
                     modifier = Modifier.padding(top = 24.dp, bottom = 32.dp),
-                    onClick = { onAction(LoginAction.OnNavigateToNewAccount) }
+                    onClick = {
+                        onAction(LoginAction.OnNavigateTo(destination = LoginDestination.NewAccount))
+                    }
                 ) {
                     Text(text = stringResource(id = R.string.create_account))
                 }

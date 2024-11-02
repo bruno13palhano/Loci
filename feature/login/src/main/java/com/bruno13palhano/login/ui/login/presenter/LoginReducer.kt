@@ -20,12 +20,20 @@ internal class LoginReducer: Reducer<LoginState, LoginEvent, LoginEffect> {
 
             is LoginEvent.DismissKeyboard -> previousState to LoginEffect.DismissKeyboard
 
-            is LoginEvent.NavigateToHome -> previousState to LoginEffect.NavigateToHome
+            is LoginEvent.NavigateTo -> {
+                when (event.destination) {
+                    is LoginDestination.Home -> {
+                        previousState to LoginEffect.NavigateTo(event.destination)
+                    }
 
-            is LoginEvent.NavigateToNewAccount -> previousState to LoginEffect.NavigateToNewAccount
+                    is LoginDestination.NewAccount -> {
+                        previousState to LoginEffect.NavigateTo(event.destination)
+                    }
 
-            is LoginEvent.NavigateToForgotPassword -> {
-                previousState to LoginEffect.NavigateToForgotPassword
+                    is LoginDestination.ForgotPassword -> {
+                        previousState to LoginEffect.NavigateTo(event.destination)
+                    }
+                }
             }
         }
     }

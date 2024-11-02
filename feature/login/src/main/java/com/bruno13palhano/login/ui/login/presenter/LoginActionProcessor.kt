@@ -11,9 +11,7 @@ internal class LoginActionProcessor : ActionProcessor<LoginAction, LoginEvent> {
 
             is LoginAction.OnDismissKeyboard -> LoginEvent.DismissKeyboard
 
-            is LoginAction.OnNavigateToNewAccount -> LoginEvent.NavigateToNewAccount
-
-            is LoginAction.OnNavigateToForgotPassword -> LoginEvent.NavigateToForgotPassword
+            is LoginAction.OnNavigateTo -> LoginEvent.NavigateTo(destination = action.destination)
         }
     }
 }
