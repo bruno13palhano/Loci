@@ -21,19 +21,7 @@ internal class LoginReducer: Reducer<LoginState, LoginEvent, LoginEffect> {
             is LoginEvent.DismissKeyboard -> previousState to LoginEffect.DismissKeyboard
 
             is LoginEvent.NavigateTo -> {
-                when (event.destination) {
-                    is LoginDestination.Home -> {
-                        previousState to LoginEffect.NavigateTo(event.destination)
-                    }
-
-                    is LoginDestination.NewAccount -> {
-                        previousState to LoginEffect.NavigateTo(event.destination)
-                    }
-
-                    is LoginDestination.ForgotPassword -> {
-                        previousState to LoginEffect.NavigateTo(event.destination)
-                    }
-                }
+                navigateTo(previousState = previousState, destination = event.destination)
             }
         }
     }
@@ -52,5 +40,22 @@ internal class LoginReducer: Reducer<LoginState, LoginEvent, LoginEffect> {
 
     private fun setInvalidLoginState(previousState: LoginState): Pair<LoginState, LoginEffect> {
         return previousState.copy(loading = false, error = true) to LoginEffect.ShowError
+    }
+
+    private fun navigateTo(
+        previousState: LoginState,
+        destination: LoginDestination
+    ): Pair<LoginState, LoginEffect?> {
+        return previousState to getDestinationEffect(destination = destination)
+    }
+
+    private fun getDestinationEffect(destination: LoginDestination): LoginEffect {
+        return when (destination) {
+            is LoginDestination.Home -> LoginEffect.NavigateTo(destination)
+
+            is LoginDestination.NewAccount -> LoginEffect.NavigateTo(destination)
+
+            is LoginDestination.ForgotPassword -> LoginEffect.NavigateTo(destination)
+        }
     }
 }
