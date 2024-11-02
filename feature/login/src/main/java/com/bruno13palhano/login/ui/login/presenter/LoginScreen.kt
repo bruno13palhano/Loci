@@ -51,9 +51,7 @@ import kotlinx.coroutines.launch
 @Composable
 internal fun LoginRoute(
     modifier: Modifier = Modifier,
-    navigateToHome: () -> Unit,
-    navigateToNewAccount: () -> Unit,
-    navigateToForgotPassword: () -> Unit,
+    navigateTo: (destination: LoginDestination) -> Unit,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
@@ -91,13 +89,7 @@ internal fun LoginRoute(
                         keyboardController = keyboardController
                     )
 
-                    when (effect.destination) {
-                        is LoginDestination.Home -> navigateToHome()
-
-                        is LoginDestination.ForgotPassword -> navigateToForgotPassword()
-
-                        is LoginDestination.NewAccount -> navigateToNewAccount()
-                    }
+                    navigateTo(effect.destination)
                 }
             }
         }
@@ -178,7 +170,9 @@ private fun LoginContent(
                     TextButton(
                         onClick = {
                             onAction(
-                                LoginAction.OnNavigateTo(destination = LoginDestination.ForgotPassword)
+                                LoginAction.OnNavigateTo(
+                                    destination = LoginDestination.ForgotPassword
+                                )
                             )
                         }
                     ) {
@@ -222,7 +216,9 @@ private fun LoginContent(
                 Button(
                     modifier = Modifier.padding(top = 24.dp, bottom = 32.dp),
                     onClick = {
-                        onAction(LoginAction.OnNavigateTo(destination = LoginDestination.NewAccount))
+                        onAction(
+                            LoginAction.OnNavigateTo(destination = LoginDestination.NewAccount)
+                        )
                     }
                 ) {
                     Text(text = stringResource(id = R.string.create_account))
