@@ -28,6 +28,7 @@ internal sealed interface LoginEvent : ViewEvent {
     data object Login : LoginEvent
     data object Error : LoginEvent
     data object TogglePasswordVisibility : LoginEvent
+    data object DismissKeyboard : LoginEvent
     data object NavigateToHome : LoginEvent
     data object NavigateToNewAccount : LoginEvent
     data object NavigateToForgotPassword : LoginEvent
@@ -36,6 +37,7 @@ internal sealed interface LoginEvent : ViewEvent {
 @Immutable
 internal sealed interface LoginEffect : ViewEffect {
     data object ShowError : LoginEffect
+    data object DismissKeyboard : LoginEffect
     data object NavigateToHome: LoginEffect
     data object NavigateToNewAccount : LoginEffect
     data object NavigateToForgotPassword : LoginEffect
@@ -45,6 +47,7 @@ internal sealed interface LoginEffect : ViewEffect {
 internal sealed interface LoginAction : ViewAction {
     data object OnLogin : LoginAction
     data object OnTogglePasswordVisibility : LoginAction
+    data object OnDismissKeyboard : LoginAction
     data object OnNavigateToNewAccount : LoginAction
     data object OnNavigateToForgotPassword : LoginAction
 }

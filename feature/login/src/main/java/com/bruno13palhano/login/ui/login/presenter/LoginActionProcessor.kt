@@ -9,6 +9,8 @@ internal class LoginActionProcessor : ActionProcessor<LoginAction, LoginEvent> {
 
             is LoginAction.OnTogglePasswordVisibility -> LoginEvent.TogglePasswordVisibility
 
+            is LoginAction.OnDismissKeyboard -> LoginEvent.DismissKeyboard
+
             is LoginAction.OnNavigateToNewAccount -> LoginEvent.NavigateToNewAccount
 
             is LoginAction.OnNavigateToForgotPassword -> LoginEvent.NavigateToForgotPassword

@@ -18,6 +18,8 @@ internal class LoginReducer: Reducer<LoginState, LoginEvent, LoginEffect> {
                 previousState.copy(passwordVisible = !previousState.passwordVisible) to null
             }
 
+            is LoginEvent.DismissKeyboard -> previousState to LoginEffect.DismissKeyboard
+
             is LoginEvent.NavigateToHome -> previousState to LoginEffect.NavigateToHome
 
             is LoginEvent.NavigateToNewAccount -> previousState to LoginEffect.NavigateToNewAccount
