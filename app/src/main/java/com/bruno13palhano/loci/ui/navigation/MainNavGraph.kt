@@ -13,6 +13,7 @@ import com.bruno13palhano.forgotpassword.navigation.forgotPasswordScreen
 import com.bruno13palhano.forgotpassword.ui.presenter.ForgotPasswordDestination
 import com.bruno13palhano.home.navigation.HomeRoutes
 import com.bruno13palhano.home.navigation.homeScreen
+import com.bruno13palhano.home.ui.presenter.HomeDestination
 import com.bruno13palhano.login.navigation.LoginRoutes
 import com.bruno13palhano.login.navigation.loginScreen
 import com.bruno13palhano.login.ui.login.presenter.LoginDestination
@@ -48,15 +49,7 @@ fun MainNavGraph(
         homeScreen(
             modifier = modifier,
             showBottomMenu = showBottomMenu,
-            navigateToLogin = {
-                navController.navigate(route = LoginRoutes.Login) {
-                    popUpTo<HomeRoutes.Home> {
-                        inclusive = true
-                    }
-                    launchSingleTop = true
-                    restoreState = true
-                }
-            }
+            navigateTo = { navController.homeNavigateTo(destination = it) }
         )
 
         workspaceScreen(
@@ -107,5 +100,19 @@ private fun NavController.forgotPasswordNavigateTo(destination: ForgotPasswordDe
         is ForgotPasswordDestination.Home -> {}
 
         is ForgotPasswordDestination.Back -> navigateUp()
+    }
+}
+
+private fun NavController.homeNavigateTo(destination: HomeDestination) {
+    when (destination) {
+        is HomeDestination.Login -> {
+            navigate(route = LoginRoutes.Login) {
+                popUpTo<HomeRoutes.Home> {
+                    inclusive = true
+                }
+                launchSingleTop = true
+                restoreState = true
+            }
+        }
     }
 }

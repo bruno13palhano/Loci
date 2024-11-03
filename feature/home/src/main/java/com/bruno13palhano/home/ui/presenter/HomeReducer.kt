@@ -7,7 +7,9 @@ internal class HomeReducer : Reducer<HomeState, HomeEvent, HomeEffect> {
         return when (event) {
             is HomeEvent.Refresh -> previousState.copy(loading = true) to null
 
-            is HomeEvent.NavigateToLogin -> previousState to HomeEffect.NavigateToLogin
+            is HomeEvent.NavigateTo -> {
+                previousState to HomeEffect.NavigateTo(destination = event.destination)
+            }
         }
     }
 }

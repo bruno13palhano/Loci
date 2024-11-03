@@ -42,7 +42,7 @@ import kotlinx.coroutines.launch
 @Composable
 internal fun HomeRoute(
     modifier: Modifier = Modifier,
-    navigateToLogin: () -> Unit,
+    navigateTo: (destination: HomeDestination) -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
@@ -63,7 +63,7 @@ internal fun HomeRoute(
                     }
                 }
 
-                is HomeEffect.NavigateToLogin -> navigateToLogin()
+                is HomeEffect.NavigateTo -> navigateTo(effect.destination)
             }
         }
     }

@@ -22,16 +22,21 @@ internal data class HomeState(
 @Immutable
 internal sealed interface HomeEvent : ViewEvent {
     data object Refresh : HomeEvent
-    data object NavigateToLogin : HomeEvent
+    data class NavigateTo(val destination: HomeDestination) : HomeEvent
 }
 
 @Immutable
 internal sealed interface HomeEffect : ViewEffect {
     data object ShowErrorInfo : HomeEffect
-    data object NavigateToLogin : HomeEffect
+    data class NavigateTo(val destination: HomeDestination) : HomeEffect
 }
 
 @Immutable
 internal sealed interface HomeAction : ViewAction {
     data object OnRefresh : HomeAction
+}
+
+@Immutable
+sealed interface HomeDestination {
+    data object Login : HomeDestination
 }

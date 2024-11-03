@@ -51,7 +51,7 @@ internal fun Authentication(
     LaunchedEffect(Unit) {
 
         if (!repository.authenticated()) {
-            sendEvent(HomeEvent.NavigateToLogin)
+            sendEvent(HomeEvent.NavigateTo(destination = HomeDestination.Login))
         }
     }
 }
