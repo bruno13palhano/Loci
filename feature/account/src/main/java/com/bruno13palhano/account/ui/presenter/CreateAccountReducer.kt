@@ -83,18 +83,6 @@ internal class CreateAccountReducer : Reducer<CreateAccountState, CreateAccountE
         return previousState.copy(
             loading = false,
             error = false
-        ) to getDestinationEffect(destination = destination)
-    }
-
-    private fun getDestinationEffect(destination: CreateAccountDestination): CreateAccountEffect {
-        return when (destination) {
-            is CreateAccountDestination.Home -> {
-                CreateAccountEffect.NavigateTo(destination = destination)
-            }
-
-            is CreateAccountDestination.Back -> {
-                CreateAccountEffect.NavigateTo(destination = destination)
-            }
-        }
+        ) to CreateAccountEffect.NavigateTo(destination = destination)
     }
 }

@@ -46,16 +46,6 @@ internal class LoginReducer: Reducer<LoginState, LoginEvent, LoginEffect> {
         previousState: LoginState,
         destination: LoginDestination
     ): Pair<LoginState, LoginEffect?> {
-        return previousState to getDestinationEffect(destination = destination)
-    }
-
-    private fun getDestinationEffect(destination: LoginDestination): LoginEffect {
-        return when (destination) {
-            is LoginDestination.Home -> LoginEffect.NavigateTo(destination)
-
-            is LoginDestination.NewAccount -> LoginEffect.NavigateTo(destination)
-
-            is LoginDestination.ForgotPassword -> LoginEffect.NavigateTo(destination)
-        }
+        return previousState to LoginEffect.NavigateTo(destination = destination)
     }
 }

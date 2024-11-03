@@ -116,18 +116,6 @@ internal class ForgotPasswordReducer : Reducer<ForgotPasswordState, ForgotPasswo
         previousState: ForgotPasswordState,
         destination: ForgotPasswordDestination
     ): Pair<ForgotPasswordState, ForgotPasswordEffect?> {
-        return previousState to getDestinationEffect(destination = destination)
-    }
-
-    private fun getDestinationEffect(destination: ForgotPasswordDestination): ForgotPasswordEffect {
-        return when (destination) {
-            is ForgotPasswordDestination.Home -> {
-                ForgotPasswordEffect.NavigateTo(destination = destination)
-            }
-
-            is ForgotPasswordDestination.Back -> {
-                ForgotPasswordEffect.NavigateTo(destination = destination)
-            }
-        }
+        return previousState to ForgotPasswordEffect.NavigateTo(destination = destination)
     }
 }
