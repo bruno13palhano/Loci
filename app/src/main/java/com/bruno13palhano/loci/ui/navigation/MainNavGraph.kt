@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.bruno13palhano.account.navigation.CreateAccountRoutes
 import com.bruno13palhano.account.navigation.createAccountScreen
+import com.bruno13palhano.account.ui.presenter.CreateAccountDestination
 import com.bruno13palhano.forgotpassword.navigation.ForgotPasswordRoutes
 import com.bruno13palhano.forgotpassword.navigation.forgotPasswordScreen
 import com.bruno13palhano.forgotpassword.ui.presenter.ForgotPasswordDestination
@@ -34,8 +35,7 @@ fun MainNavGraph(
 
         createAccountScreen(
             modifier = modifier,
-            navigateToHome = {},
-            navigateBack = { navController.navigateUp() },
+            navigateTo = { navController.createAccountNavigateTo(destination = it) },
             showBottomMenu = showBottomMenu
         )
 
@@ -91,6 +91,14 @@ private fun NavController.loginNavigateTo(destination: LoginDestination) {
         is LoginDestination.NewAccount -> navigate(route = CreateAccountRoutes.CreateAccount)
 
         is LoginDestination.ForgotPassword -> navigate(route = ForgotPasswordRoutes.ForgotPassword)
+    }
+}
+
+private fun NavController.createAccountNavigateTo(destination: CreateAccountDestination) {
+    when (destination) {
+        is CreateAccountDestination.Home -> {}
+
+        is CreateAccountDestination.Back -> navigateUp()
     }
 }
 

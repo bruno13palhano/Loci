@@ -47,8 +47,7 @@ import kotlinx.coroutines.launch
 @Composable
 internal fun CreateAccountRoute(
     modifier: Modifier = Modifier,
-    navigateToHome: () -> Unit,
-    navigateBack: () -> Unit,
+    navigateTo: (destination: CreateAccountDestination) -> Unit,
     viewModel: CreateAccountViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
@@ -61,8 +60,6 @@ internal fun CreateAccountRoute(
     LaunchedEffect(effects) {
         effects.collect { effect ->
             when (effect) {
-                is CreateAccountEffect.NavigateToHome -> navigateToHome()
-
                 is CreateAccountEffect.ShowError -> {
                     scope.launch {
                         snackbarHostState.showSnackbar(
@@ -72,7 +69,7 @@ internal fun CreateAccountRoute(
                     }
                 }
 
-                is CreateAccountEffect.NavigateBack -> navigateBack()
+                is CreateAccountEffect.NavigateTo -> navigateTo(effect.destination)
             }
         }
     }
@@ -108,7 +105,15 @@ private fun CreateAccountContent(
             TopAppBar(
                 title = { Text(text = stringResource(id = R.string.create_account)) },
                 navigationIcon = {
-                    IconButton(onClick = { onAction(CreateAccountAction.OnNavigateBack) }) {
+                    IconButton(
+                        onClick = {
+                            onAction(
+                                CreateAccountAction.OnNavigateTo(
+                                    destination = CreateAccountDestination.Back
+                                )
+                            )
+                        }
+                    ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(id = R.string.navigate_back)

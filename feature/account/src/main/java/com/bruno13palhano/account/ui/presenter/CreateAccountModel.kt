@@ -31,15 +31,13 @@ internal sealed interface CreateAccountEvent : ViewEvent {
     data object Error : CreateAccountEvent
     data object TogglePasswordVisibility : CreateAccountEvent
     data object ToggleConfirmPasswordVisibility : CreateAccountEvent
-    data object NavigateToHome : CreateAccountEvent
-    data object NavigateBack : CreateAccountEvent
+    data class NavigateTo(val destination: CreateAccountDestination) : CreateAccountEvent
 }
 
 @Immutable
 internal sealed interface CreateAccountEffect : ViewEffect {
     data object ShowError : CreateAccountEffect
-    data object NavigateToHome : CreateAccountEffect
-    data object NavigateBack : CreateAccountEffect
+    data class NavigateTo(val destination: CreateAccountDestination) : CreateAccountEffect
 }
 
 @Immutable
@@ -47,5 +45,11 @@ internal sealed interface CreateAccountAction : ViewAction {
     data object OnDone : CreateAccountAction
     data object OnTogglePasswordVisibility : CreateAccountAction
     data object OnToggleConfirmPasswordVisibility : CreateAccountAction
-    data object OnNavigateBack : CreateAccountAction
+    data class OnNavigateTo(val destination: CreateAccountDestination) : CreateAccountAction
+}
+
+@Immutable
+sealed interface CreateAccountDestination {
+    data object Home : CreateAccountDestination
+    data object Back : CreateAccountDestination
 }

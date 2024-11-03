@@ -24,12 +24,8 @@ internal class CreateAccountReducer : Reducer<CreateAccountState, CreateAccountE
                 toggleConfirmPasswordVisibility(previousState = previousState)
             }
 
-            is CreateAccountEvent.NavigateToHome -> {
-                navigateToHome(previousState = previousState)
-            }
-
-            is CreateAccountEvent.NavigateBack -> {
-                navigateBack(previousState = previousState)
+            is CreateAccountEvent.NavigateTo -> {
+                navigateTo(previousState = previousState, destination = event.destination)
             }
         }
     }
@@ -76,21 +72,25 @@ internal class CreateAccountReducer : Reducer<CreateAccountState, CreateAccountE
         ) to null
     }
 
-    private fun navigateToHome(
-        previousState: CreateAccountState
+    private fun navigateTo(
+        previousState: CreateAccountState,
+        destination: CreateAccountDestination
     ): Pair<CreateAccountState, CreateAccountEffect?> {
         return previousState.copy(
             loading = false,
             error = false
-        ) to CreateAccountEffect.NavigateToHome
+        ) to getDestinationEffect(destination = destination)
     }
 
-    private fun navigateBack(
-        previousState: CreateAccountState
-    ): Pair<CreateAccountState, CreateAccountEffect?> {
-        return previousState.copy(
-            loading = false,
-            error = false
-        ) to CreateAccountEffect.NavigateBack
+    private fun getDestinationEffect(destination: CreateAccountDestination): CreateAccountEffect {
+        return when (destination) {
+            is CreateAccountDestination.Home -> {
+                CreateAccountEffect.NavigateTo(destination = destination)
+            }
+
+            is CreateAccountDestination.Back -> {
+                CreateAccountEffect.NavigateTo(destination = destination)
+            }
+        }
     }
 }
