@@ -34,8 +34,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -61,6 +63,9 @@ import kotlinx.coroutines.launch
     val scope = rememberCoroutineScope()
     val errorMessages = getErrorMessagesFromStringsRes()
 
+    val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     LaunchedEffect(effects) {
         effects.collect { effect ->
             when (effect) {
@@ -78,7 +83,21 @@ import kotlinx.coroutines.launch
                     }
                 }
 
-                is ForgotPasswordEffect.NavigateTo -> navigateTo(effect.destination)
+                is ForgotPasswordEffect.DismissKeyboard -> {
+                    clearFocusAndDismissKeyboard(
+                        focusManager = focusManager,
+                        keyboardController = keyboardController
+                    )
+                }
+
+                is ForgotPasswordEffect.NavigateTo -> {
+                    clearFocusAndDismissKeyboard(
+                        focusManager = focusManager,
+                        keyboardController = keyboardController
+                    )
+
+                    navigateTo(effect.destination)
+                }
             }
         }
     }
@@ -99,15 +118,9 @@ private fun ForgotPasswordContent(
     state: ForgotPasswordState,
     onAction: (action: ForgotPasswordAction) -> Unit
 ) {
-    val focusManager = LocalFocusManager.current
-    val keyboardController = LocalSoftwareKeyboardController.current
-
     Scaffold(
         modifier = modifier
-            .clickableWithoutRipple {
-                keyboardController?.hide()
-                focusManager.clearFocus(force = true)
-            }
+            .clickableWithoutRipple { onAction(ForgotPasswordAction.OnDismissKeyboard) }
             .consumeWindowInsets(WindowInsets.statusBars)
             .consumeWindowInsets(WindowInsets.safeDrawing),
         topBar = {
@@ -233,6 +246,14 @@ private fun ForgotPasswordContent(
             }
         }
     }
+}
+
+private fun clearFocusAndDismissKeyboard(
+    focusManager: FocusManager,
+    keyboardController: SoftwareKeyboardController?
+) {
+    focusManager.clearFocus(force = true)
+    keyboardController?.hide()
 }
 
 @Composable

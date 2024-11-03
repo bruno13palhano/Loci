@@ -28,6 +28,10 @@ internal class ForgotPasswordReducer : Reducer<ForgotPasswordState, ForgotPasswo
                 internalError(previousState = previousState, errorType = event.errorType)
             }
 
+            is ForgotPasswordEvent.DismissKeyboard -> {
+                previousState to ForgotPasswordEffect.DismissKeyboard
+            }
+
             is ForgotPasswordEvent.NavigateTo -> {
                 navigateTo(
                     previousState = previousState,

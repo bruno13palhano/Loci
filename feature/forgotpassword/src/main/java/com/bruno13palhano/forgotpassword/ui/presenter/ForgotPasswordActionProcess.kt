@@ -21,6 +21,8 @@ internal class ForgotPasswordActionProcess : ActionProcessor<ForgotPasswordActio
                 ForgotPasswordEvent.CancelUpdatePassword
             }
 
+            is ForgotPasswordAction.OnDismissKeyboard -> ForgotPasswordEvent.DismissKeyboard
+
             is ForgotPasswordAction.OnNavigateTo -> {
                 ForgotPasswordEvent.NavigateTo(destination = action.destination)
             }
