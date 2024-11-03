@@ -16,9 +16,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.flowWithLifecycle
@@ -91,4 +93,12 @@ fun <T> rememberFlowWithLifecycle(
         lifecycle = lifecycle,
         minActiveState = minActiveState
     )
+}
+
+fun clearFocusAndDismissKeyboard(
+    focusManager: FocusManager,
+    keyboardController: SoftwareKeyboardController?
+) {
+    focusManager.clearFocus(force = true)
+    keyboardController?.hide()
 }

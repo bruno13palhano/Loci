@@ -34,10 +34,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -47,6 +45,7 @@ import com.bruno13palhano.forgotpassword.ui.viewmodel.ForgotPasswordViewModel
 import com.bruno13palhano.ui.components.CircularProgress
 import com.bruno13palhano.ui.components.CustomPasswordTextField
 import com.bruno13palhano.ui.components.CustomTextField
+import com.bruno13palhano.ui.components.clearFocusAndDismissKeyboard
 import com.bruno13palhano.ui.components.clickableWithoutRipple
 import com.bruno13palhano.ui.components.rememberFlowWithLifecycle
 import kotlinx.coroutines.launch
@@ -246,14 +245,6 @@ private fun ForgotPasswordContent(
             }
         }
     }
-}
-
-private fun clearFocusAndDismissKeyboard(
-    focusManager: FocusManager,
-    keyboardController: SoftwareKeyboardController?
-) {
-    focusManager.clearFocus(force = true)
-    keyboardController?.hide()
 }
 
 @Composable
