@@ -89,7 +89,15 @@ private fun NavController.loginNavigateTo(destination: LoginDestination) {
 
 private fun NavController.createAccountNavigateTo(destination: CreateAccountDestination) {
     when (destination) {
-        is CreateAccountDestination.Home -> {}
+        is CreateAccountDestination.Home -> {
+            navigate(route = HomeRoutes.Home) {
+                popUpTo<CreateAccountRoutes.CreateAccount> {
+                    inclusive = true
+                }
+                launchSingleTop = true
+                restoreState = true
+            }
+        }
 
         is CreateAccountDestination.Back -> navigateUp()
     }
@@ -97,7 +105,7 @@ private fun NavController.createAccountNavigateTo(destination: CreateAccountDest
 
 private fun NavController.forgotPasswordNavigateTo(destination: ForgotPasswordDestination) {
     when (destination) {
-        is ForgotPasswordDestination.Home -> {}
+        is ForgotPasswordDestination.Home -> navigate(route = ForgotPasswordRoutes.ForgotPassword)
 
         is ForgotPasswordDestination.Back -> navigateUp()
     }
