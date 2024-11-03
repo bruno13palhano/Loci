@@ -9,24 +9,14 @@ import kotlinx.serialization.Serializable
 
 fun NavGraphBuilder.loginScreen(
     modifier: Modifier = Modifier,
-    navigateToHome: () -> Unit,
-    navigateToNewAccount: () -> Unit,
-    navigateToForgotPassword: () -> Unit,
+    navigateTo: (destination: LoginDestination) -> Unit,
     showBottomMenu: (show: Boolean) -> Unit
 ) {
     composable<LoginRoutes.Login> {
         showBottomMenu(false)
         LoginRoute(
             modifier = modifier,
-            navigateTo = { destination ->
-                when (destination) {
-                    is LoginDestination.Home -> navigateToHome()
-
-                    is LoginDestination.NewAccount -> navigateToNewAccount()
-
-                    is LoginDestination.ForgotPassword -> navigateToForgotPassword()
-                }
-            }
+            navigateTo = navigateTo
         )
     }
 }
