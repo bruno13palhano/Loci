@@ -24,6 +24,10 @@ internal class CreateAccountReducer : Reducer<CreateAccountState, CreateAccountE
                 toggleConfirmPasswordVisibility(previousState = previousState)
             }
 
+            is CreateAccountEvent.DismissKeyboard -> {
+                previousState to CreateAccountEffect.DismissKeyboard
+            }
+
             is CreateAccountEvent.NavigateTo -> {
                 navigateTo(previousState = previousState, destination = event.destination)
             }

@@ -40,6 +40,7 @@ import com.bruno13palhano.account.ui.viewmodel.CreateAccountViewModel
 import com.bruno13palhano.ui.components.CircularProgress
 import com.bruno13palhano.ui.components.CustomPasswordTextField
 import com.bruno13palhano.ui.components.CustomTextField
+import com.bruno13palhano.ui.components.clearFocusAndDismissKeyboard
 import com.bruno13palhano.ui.components.clickableWithoutRipple
 import com.bruno13palhano.ui.components.rememberFlowWithLifecycle
 import kotlinx.coroutines.launch
@@ -57,6 +58,9 @@ internal fun CreateAccountRoute(
     val scope = rememberCoroutineScope()
     val fillFieldsErrorMessage = stringResource(id = R.string.fill_all_fields)
 
+    val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     LaunchedEffect(effects) {
         effects.collect { effect ->
             when (effect) {
@@ -69,7 +73,21 @@ internal fun CreateAccountRoute(
                     }
                 }
 
-                is CreateAccountEffect.NavigateTo -> navigateTo(effect.destination)
+                is CreateAccountEffect.DismissKeyboard -> {
+                    clearFocusAndDismissKeyboard(
+                        focusManager = focusManager,
+                        keyboardController = keyboardController
+                    )
+                }
+
+                is CreateAccountEffect.NavigateTo -> {
+                    clearFocusAndDismissKeyboard(
+                        focusManager = focusManager,
+                        keyboardController = keyboardController
+                    )
+
+                    navigateTo(effect.destination)
+                }
             }
         }
     }
@@ -90,15 +108,9 @@ private fun CreateAccountContent(
     state: CreateAccountState,
     onAction: (action: CreateAccountAction) -> Unit
 ) {
-    val focusManager = LocalFocusManager.current
-    val keyboardController = LocalSoftwareKeyboardController.current
-
     Scaffold(
         modifier = modifier
-            .clickableWithoutRipple {
-                keyboardController?.hide()
-                focusManager.clearFocus(force = true)
-            }
+            .clickableWithoutRipple { onAction(CreateAccountAction.OnDismissKeyboard) }
             .consumeWindowInsets(WindowInsets.statusBars)
             .consumeWindowInsets(WindowInsets.safeDrawing),
         topBar = {

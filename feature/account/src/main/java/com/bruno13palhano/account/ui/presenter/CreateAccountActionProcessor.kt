@@ -15,6 +15,8 @@ internal class CreateAccountActionProcessor : ActionProcessor<CreateAccountActio
                 CreateAccountEvent.ToggleConfirmPasswordVisibility
             }
 
+            is CreateAccountAction.OnDismissKeyboard -> CreateAccountEvent.DismissKeyboard
+
             is CreateAccountAction.OnNavigateTo -> {
                 CreateAccountEvent.NavigateTo(destination = action.destination)
             }
