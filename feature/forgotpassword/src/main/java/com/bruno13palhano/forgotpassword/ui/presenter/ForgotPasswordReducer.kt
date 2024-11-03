@@ -28,9 +28,12 @@ internal class ForgotPasswordReducer : Reducer<ForgotPasswordState, ForgotPasswo
                 internalError(previousState = previousState, errorType = event.errorType)
             }
 
-            is ForgotPasswordEvent.NavigateToHome -> navigateToHome(previousState = previousState)
-
-            is ForgotPasswordEvent.NavigateBack -> navigateBack(previousState = previousState)
+            is ForgotPasswordEvent.NavigateTo -> {
+                navigateTo(
+                    previousState = previousState,
+                    destination = event.destination
+                )
+            }
         }
     }
 
@@ -60,7 +63,7 @@ internal class ForgotPasswordReducer : Reducer<ForgotPasswordState, ForgotPasswo
                 loading = true,
                 invalidFields = false,
                 showErrorInfo = false
-            ) to ForgotPasswordEffect.NavigateToHome
+            ) to ForgotPasswordEffect.NavigateTo(destination = ForgotPasswordDestination.Home)
         } else {
             previousState.copy(
                 loading = false,
@@ -105,21 +108,22 @@ internal class ForgotPasswordReducer : Reducer<ForgotPasswordState, ForgotPasswo
         ) to ForgotPasswordEffect.ShowErrorInfo(errorType = errorType)
     }
 
-    private fun navigateToHome(
-        previousState: ForgotPasswordState
+    private fun navigateTo(
+        previousState: ForgotPasswordState,
+        destination: ForgotPasswordDestination
     ): Pair<ForgotPasswordState, ForgotPasswordEffect?> {
-        return previousState.copy(
-            loading = false,
-            internalError = false
-        ) to ForgotPasswordEffect.NavigateToHome
+        return previousState to getDestinationEffect(destination = destination)
     }
 
-    private fun navigateBack(
-        previousState: ForgotPasswordState
-    ): Pair<ForgotPasswordState, ForgotPasswordEffect?> {
-        return previousState.copy(
-            loading = false,
-            internalError = false
-        ) to ForgotPasswordEffect.NavigateBack
+    private fun getDestinationEffect(destination: ForgotPasswordDestination): ForgotPasswordEffect {
+        return when (destination) {
+            is ForgotPasswordDestination.Home -> {
+                ForgotPasswordEffect.NavigateTo(destination = destination)
+            }
+
+            is ForgotPasswordDestination.Back -> {
+                ForgotPasswordEffect.NavigateTo(destination = destination)
+            }
+        }
     }
 }

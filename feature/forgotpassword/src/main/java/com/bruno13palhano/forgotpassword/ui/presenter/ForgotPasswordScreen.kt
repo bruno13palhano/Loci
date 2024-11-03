@@ -51,8 +51,7 @@ import kotlinx.coroutines.launch
 
 @Composable internal fun ForgotPasswordRoute(
     modifier: Modifier = Modifier,
-    navigateToHome: () -> Unit,
-    navigateBack: () -> Unit,
+    navigateTo: (destination: ForgotPasswordDestination) -> Unit,
     viewModel: ForgotPasswordViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
@@ -79,9 +78,7 @@ import kotlinx.coroutines.launch
                     }
                 }
 
-                is ForgotPasswordEffect.NavigateToHome -> navigateToHome()
-
-                is ForgotPasswordEffect.NavigateBack -> navigateBack()
+                is ForgotPasswordEffect.NavigateTo -> navigateTo(effect.destination)
             }
         }
     }
@@ -117,7 +114,15 @@ private fun ForgotPasswordContent(
             TopAppBar(
                 title = { Text(text = stringResource(id = R.string.forgot_password_title)) },
                 navigationIcon = {
-                    IconButton(onClick = { onAction(ForgotPasswordAction.OnNavigateBack) }) {
+                    IconButton(
+                        onClick = {
+                            onAction(
+                                ForgotPasswordAction.OnNavigateTo(
+                                    destination = ForgotPasswordDestination.Back
+                                )
+                            )
+                        }
+                    ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = null

@@ -39,15 +39,13 @@ internal sealed interface ForgotPasswordEvent : ViewEvent {
     data object TogglePasswordVisibility : ForgotPasswordEvent
     data object ToggleConfirmPasswordVisibility : ForgotPasswordEvent
     data class InternalError(val errorType: ErrorType) : ForgotPasswordEvent
-    data object NavigateBack : ForgotPasswordEvent
-    data object NavigateToHome : ForgotPasswordEvent
+    data class NavigateTo(val destination: ForgotPasswordDestination) : ForgotPasswordEvent
 }
 
 @Immutable
 internal sealed interface ForgotPasswordEffect : ViewEffect {
     data class ShowErrorInfo(val errorType: ErrorType) : ForgotPasswordEffect
-    data object NavigateBack : ForgotPasswordEffect
-    data object NavigateToHome : ForgotPasswordEffect
+    data class NavigateTo(val destination: ForgotPasswordDestination) : ForgotPasswordEffect
 }
 
 @Immutable
@@ -57,7 +55,7 @@ internal sealed interface ForgotPasswordAction : ViewAction {
     data object OnCancelUpdatePassword : ForgotPasswordAction
     data object OnTogglePasswordVisibility : ForgotPasswordAction
     data object OnToggleConfirmPasswordVisibility : ForgotPasswordAction
-    data object OnNavigateBack : ForgotPasswordAction
+    data class OnNavigateTo(val destination: ForgotPasswordDestination) : ForgotPasswordAction
 }
 
 @Immutable
@@ -67,4 +65,10 @@ internal sealed interface ErrorType {
     data object FillMissingField : ErrorType
     data object InvalidEmail : ErrorType
     data object PasswordDoesNotMatch : ErrorType
+}
+
+@Immutable
+sealed interface ForgotPasswordDestination {
+    data object Home : ForgotPasswordDestination
+    data object Back : ForgotPasswordDestination
 }
