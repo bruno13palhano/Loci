@@ -9,6 +9,7 @@ import com.bruno13palhano.account.navigation.CreateAccountRoutes
 import com.bruno13palhano.account.navigation.createAccountScreen
 import com.bruno13palhano.forgotpassword.navigation.ForgotPasswordRoutes
 import com.bruno13palhano.forgotpassword.navigation.forgotPasswordScreen
+import com.bruno13palhano.forgotpassword.ui.presenter.ForgotPasswordDestination
 import com.bruno13palhano.home.navigation.HomeRoutes
 import com.bruno13palhano.home.navigation.homeScreen
 import com.bruno13palhano.login.navigation.LoginRoutes
@@ -40,8 +41,7 @@ fun MainNavGraph(
 
         forgotPasswordScreen(
             modifier = modifier,
-            navigateToHome = {},
-            navigateBack = { navController.navigateUp() },
+            navigateTo = { navController.forgotPasswordNavigateTo(destination = it) },
             showBottomMenu = showBottomMenu
         )
 
@@ -91,5 +91,13 @@ private fun NavController.loginNavigateTo(destination: LoginDestination) {
         is LoginDestination.NewAccount -> navigate(route = CreateAccountRoutes.CreateAccount)
 
         is LoginDestination.ForgotPassword -> navigate(route = ForgotPasswordRoutes.ForgotPassword)
+    }
+}
+
+private fun NavController.forgotPasswordNavigateTo(destination: ForgotPasswordDestination) {
+    when (destination) {
+        is ForgotPasswordDestination.Home -> {}
+
+        is ForgotPasswordDestination.Back -> navigateUp()
     }
 }
