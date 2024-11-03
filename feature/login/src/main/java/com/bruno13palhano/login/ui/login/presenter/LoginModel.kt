@@ -48,7 +48,7 @@ internal sealed interface LoginAction : ViewAction {
 }
 
 @Immutable
-internal sealed interface LoginDestination {
+sealed interface LoginDestination {
     data object Home : LoginDestination
     data object NewAccount : LoginDestination
     data object ForgotPassword : LoginDestination
