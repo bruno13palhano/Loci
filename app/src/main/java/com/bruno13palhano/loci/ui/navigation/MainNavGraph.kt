@@ -2,21 +2,13 @@ package com.bruno13palhano.loci.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.bruno13palhano.account.navigation.CreateAccountRoutes
 import com.bruno13palhano.account.navigation.createAccountScreen
-import com.bruno13palhano.account.ui.presenter.CreateAccountDestination
-import com.bruno13palhano.forgotpassword.navigation.ForgotPasswordRoutes
 import com.bruno13palhano.forgotpassword.navigation.forgotPasswordScreen
-import com.bruno13palhano.forgotpassword.ui.presenter.ForgotPasswordDestination
 import com.bruno13palhano.home.navigation.HomeRoutes
 import com.bruno13palhano.home.navigation.homeScreen
-import com.bruno13palhano.home.ui.presenter.HomeDestination
-import com.bruno13palhano.login.navigation.LoginRoutes
 import com.bruno13palhano.login.navigation.loginScreen
-import com.bruno13palhano.login.ui.login.presenter.LoginDestination
 import com.bruno13palhano.messages.navigation.messagesScreen
 import com.bruno13palhano.profile.navigation.profileScreen
 import com.bruno13palhano.workspace.navigation.workspaceScreen
@@ -66,61 +58,5 @@ fun MainNavGraph(
             modifier = modifier,
             showBottomMenu = showBottomMenu
         )
-    }
-}
-
-private fun NavController.loginNavigateTo(destination: LoginDestination) {
-    when (destination) {
-        is LoginDestination.Home -> {
-            navigate(route = HomeRoutes.Home) {
-                popUpTo<LoginRoutes.Login> {
-                    inclusive = true
-                }
-                launchSingleTop = true
-                restoreState = true
-            }
-        }
-
-        is LoginDestination.NewAccount -> navigate(route = CreateAccountRoutes.CreateAccount)
-
-        is LoginDestination.ForgotPassword -> navigate(route = ForgotPasswordRoutes.ForgotPassword)
-    }
-}
-
-private fun NavController.createAccountNavigateTo(destination: CreateAccountDestination) {
-    when (destination) {
-        is CreateAccountDestination.Home -> {
-            navigate(route = HomeRoutes.Home) {
-                popUpTo<CreateAccountRoutes.CreateAccount> {
-                    inclusive = true
-                }
-                launchSingleTop = true
-                restoreState = true
-            }
-        }
-
-        is CreateAccountDestination.Back -> navigateUp()
-    }
-}
-
-private fun NavController.forgotPasswordNavigateTo(destination: ForgotPasswordDestination) {
-    when (destination) {
-        is ForgotPasswordDestination.Home -> navigate(route = ForgotPasswordRoutes.ForgotPassword)
-
-        is ForgotPasswordDestination.Back -> navigateUp()
-    }
-}
-
-private fun NavController.homeNavigateTo(destination: HomeDestination) {
-    when (destination) {
-        is HomeDestination.Login -> {
-            navigate(route = LoginRoutes.Login) {
-                popUpTo<HomeRoutes.Home> {
-                    inclusive = true
-                }
-                launchSingleTop = true
-                restoreState = true
-            }
-        }
     }
 }
