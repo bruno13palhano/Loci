@@ -64,4 +64,6 @@ dependencies {
     ksp(libs.hilt.android.compiler)
     ksp(libs.androidx.hilt.compiler)
     implementation(libs.hilt.android)
+    implementation(libs.krossbow.stomp)
+    implementation(libs.krossbow.websocket)
 }
