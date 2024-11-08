@@ -1,0 +1,9 @@
+CREATE TABLE Messages (
+    message TEXT NOT NULL PRIMARY KEY
+);
+
+insert:
+INSERT OR REPLACE INTO Messages(message) VALUES (?);
+
+get:
+SELECT * FROM Messages WHERE message = ?;
