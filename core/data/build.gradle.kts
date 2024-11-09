@@ -1,3 +1,6 @@
+import app.cash.sqldelight.core.capitalize
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -64,6 +67,19 @@ sqldelight {
     databases {
         create("AppDatabase") {
             packageName.set("com.bruno13palhano.cache")
+        }
+    }
+}
+
+tasks.getByName("preBuild").dependsOn(":core:data:generateSqlDelightInterface")
+
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        afterEvaluate {
+            val variantName = variant.name.capitalize()
+            tasks.getByName<KotlinCompile>("ksp${variantName}Kotlin") {
+                setSource(tasks.getByName("generate${variantName}AppDatabaseInterface").outputs)
+            }
         }
     }
 }
